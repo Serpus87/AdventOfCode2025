@@ -1,8 +1,9 @@
-﻿public class Program
+﻿using AdventOfCode2025.Day1;
+
+public class Program
 {
     private static void Main(string[] args)
     {
-        // See https://aka.ms/new-console-template for more information
-        Console.WriteLine("Hello, World!");
+        Day1.Solve();
     }
 }
