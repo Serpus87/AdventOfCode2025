@@ -13,7 +13,6 @@ public class Dial
     private const uint MinimumPosition = 0;
     private const uint MaximumPosition = 99;
     private const int PositionCorrection = 100;
-    private bool HasPassedMinOrMax = false;
     private bool IsStartPositionZero = false;
 
     public uint Position { get; set; }
