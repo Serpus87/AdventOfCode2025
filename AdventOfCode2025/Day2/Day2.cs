@@ -20,7 +20,9 @@ public static class Day2
         // firstTry: 28844599675 - correct!
         Console.WriteLine($"Day2 Part1 Solution: {solutionPart1}");
 
-        //var solutionPart2 = Part2.Solve();
-        //Console.WriteLine($"Day2 Part2 Solution: {solutionPart2}");
+        var solutionPart2 = Part2.Solve(idPairs);
+
+        // firstTre: 48778605167 - correct!
+        Console.WriteLine($"Day2 Part2 Solution: {solutionPart2}");
     }
 }
