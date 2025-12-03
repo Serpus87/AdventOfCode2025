@@ -29,6 +29,7 @@ public class Day3Tests
     [DataRow("811111111111119", 811111111119ul)]
     [DataRow("234234234234278", 434234234278ul)]
     [DataRow("818181911112111", 888911112111ul)]
+    [DataRow("123456789123", 123456789123ul)]
     [TestMethod]
     public void Part3Solve_BankInput_ReturnsExpectedResult(string line, ulong expectedResult)
     {

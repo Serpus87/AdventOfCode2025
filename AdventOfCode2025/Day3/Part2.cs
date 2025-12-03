@@ -12,6 +12,7 @@ public static class Part2
     {
         var totalOutputJoltage = 0ul;
 
+        //foreach (var bank in banks.Where(x=>x.Joltages.Count >= 12))
         foreach (var bank in banks)
         {
             var highestJoltages = new List<uint>();
