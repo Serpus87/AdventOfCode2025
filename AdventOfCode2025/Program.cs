@@ -1,9 +1,9 @@
-﻿using AdventOfCode2025.Day2;
+﻿using AdventOfCode2025.Day3;
 
 public class Program
 {
     private static void Main(string[] args)
     {
-        Day2.Solve();
+        Day3.Solve();
     }
 }
