@@ -9,7 +9,7 @@ namespace AdventOfCode2025.Day4;
 public class Field
 {
     public Position Position { get; init; }
-    public bool IsRollOfPaper { get; init; }
+    public bool IsRollOfPaper { get; set; }
     public char Fill { get; init; }
 
     public Field(Position position, char fill)

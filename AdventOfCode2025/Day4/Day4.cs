@@ -16,9 +16,13 @@ public static class Day4
         var map = MapService.GetMap(input);
 
         var solution = Part1.Solve(map);
+
+        // firstTry: 1478 - correct!
         Console.WriteLine($"Day4 Part1 Solution: {solution}");
 
         solution = Part2.Solve(map);
+
+        // firstTry: 9120 - correct!
         Console.WriteLine($"Day4 Part2 Solution: {solution}");
     }
 }

@@ -45,6 +45,23 @@ public class Day4Tests
         Assert.AreEqual(expectedResult, result);
     }
 
+    [TestMethod]
+    public void Part2Solve_Example_ReturnsExpectedResult()
+    {
+        // Arrange
+        var expectedResult = 43u;
+
+        var fileName = "Example.txt";
+        var input = File.ReadAllLines($"Day4\\{fileName}");
+        var map = MapService.GetMap(input);
+
+        // Act
+        var result = Part2.Solve(map);
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
     private Map CreateTestMap()
     {
         var map = new Map(3, 3);
