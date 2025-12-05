@@ -13,18 +13,13 @@ public static class Part1
     {
         // get list of fresh id's
         //var freshIds = GetFreshIds(input.IdPairs);
+        var nonOverlappingIdPairs = IdService.CreateNonOverlappingIdPairs(input.IdPairs);
 
         // check ingredients
-        var freshIngredients = GetFreshIngredients(input.Ingredients, input.IdPairs);
+        var freshIngredients = GetFreshIngredients(input.Ingredients, nonOverlappingIdPairs);
+        //var freshIngredients = GetFreshIngredients(input.Ingredients, input.IdPairs);
 
         return freshIngredients.Count;
-    }
-
-    private static List<IdPair> GetEffectiveIdPairs(IdPair idPair) // this would optimize code; but seems unnecessary
-    {
-        var effectiveIdPairs = new List<IdPair>();
-
-        return effectiveIdPairs;
     }
 
     private static List<ulong> GetFreshIngredients(List<ulong> ingredients, List<IdPair> freshIdPairs)
@@ -39,6 +34,7 @@ public static class Part1
             }
         }
 
+        freshIngredients.ForEach(x=> Console.WriteLine(x));
         return freshIngredients;
     }
 

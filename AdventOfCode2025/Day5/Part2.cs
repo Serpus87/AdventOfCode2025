@@ -9,25 +9,24 @@ namespace AdventOfCode2025.Day5;
 
 public static class Part2
 {
-    public static int Solve(Input input)
+    public static ulong Solve(Input input)
     {
-        var freshIds = GetFreshIds(input.IdPairs);
+        var nonOverlappingIdPairs = IdService.CreateNonOverlappingIdPairs(input.IdPairs);
 
-        return freshIds.Count;
+        var freshIdCount = CountFreshIds(nonOverlappingIdPairs);
+
+        return freshIdCount;
     }
 
-    private static List<ulong> GetFreshIds(List<IdPair> idPairs)
+    private static ulong CountFreshIds(List<IdPair> nonOverlappingIdPairs)
     {
-        var freshIds = new List<ulong>();
+        var count = 0ul;
 
-        foreach (var idPair in idPairs)
+        foreach (var idPair in nonOverlappingIdPairs)
         {
-            for (ulong id = idPair.Id1; id <= idPair.Id2; id++)
-            {
-                freshIds.Add(id);
-            }
+            count += idPair.Id2 - idPair.Id1 + 1;
         }
 
-        return freshIds.Distinct().ToList();
+        return count;
     }
 }
