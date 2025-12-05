@@ -15,44 +15,16 @@ public static class Day5
         var fileName = "PuzzleInput.txt";
         var input = InputReader.GetInput(fileName);
 
-        // create clean copies ?
-        var inputPart1 = new Input(input.IdPairs.CreateCleanCopy(), input.Ingredients.CreateCleanCopy());
-        var inputPart2 = new Input(input.IdPairs.CreateCleanCopy(), input.Ingredients.CreateCleanCopy());
-
-        var solutionPart1 = Part1.Solve(inputPart1);
+        var solutionPart1 = Part1.Solve(input);
 
         // firstTry: 739 - correct
         Console.WriteLine($"Day5 Part1 Solution: {solutionPart1}");
 
-        var solutionPart2 = Part2.Solve(inputPart2);
+        var solutionPart2 = Part2.Solve(input);
 
         // firstTry: 29059536185748 - too low
         // secondTry: 428252945940221 - too high
         // thirdTry: 344486348901788 - correct!
         Console.WriteLine($"Day5 Part2 Solution: {solutionPart2}");
-    }
-
-    private static List<IdPair> CreateCleanCopy(this List<IdPair> idPairs) // todo maybe move to (shared) extensions class
-    {
-        var cleanCopy = new List<IdPair>();
-
-        foreach (var idPair in idPairs)
-        {
-            cleanCopy.Add(new IdPair(idPair.Id1, idPair.Id2));
-        }
-
-        return cleanCopy;
-    }
-
-    private static List<ulong> CreateCleanCopy(this List<ulong> ingredients)
-    {
-        var cleanCopy = new List<ulong>();
-
-        foreach (var ingredient in ingredients)
-        {
-            cleanCopy.Add(ingredient);
-        }
-
-        return cleanCopy;
     }
 }
