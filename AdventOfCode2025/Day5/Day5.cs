@@ -12,17 +12,16 @@ public static class Day5
     {
         // read file
         var fileName = "PuzzleInput.txt";
-        //var input = File.ReadAllLines($"Day4\\{fileName}");
-        //var map = MapService.GetMap(input);
+        var input = InputReader.GetInput(fileName);
+        
+        var solution = Part1.Solve(input);
 
-        //var solution = Part1.Solve(map);
+        // firstTry: 739 - correct
+        Console.WriteLine($"Day5 Part1 Solution: {solution}");
 
-        //// firstTry: 1478 - correct!
-        //Console.WriteLine($"Day4 Part1 Solution: {solution}");
+        solution = Part2.Solve(input);
 
-        //solution = Part2.Solve(map);
-
-        //// firstTry: 9120 - correct!
-        //Console.WriteLine($"Day4 Part2 Solution: {solution}");
+        // firstTry: 
+        Console.WriteLine($"Day5 Part2 Solution: {solution}");
     }
 }
