@@ -54,7 +54,8 @@ public class Day5Tests
         var idPair2 = new IdPair(id1IdPair2, id2IdPair2);
         var expectedIdPairResult = new IdPair(id1NonOverlappingId, id2NonOverlappingId);
 
-        var idPairs = new List<IdPair> {
+        var idPairs = new List<IdPair> 
+        {
             idPair1,
             idPair2
         };
