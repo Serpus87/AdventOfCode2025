@@ -29,9 +29,9 @@ public class Day6Tests
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0;
+        var expectedResult = 3263827ul;
         var fileName = "Example.txt";
-        var input = InputReader.GetProblems(fileName);
+        var input = InputReader.GetProblemsWithFields(fileName);
 
         // Act
         var result = Part2.Solve(input);

@@ -15,37 +15,9 @@ public static class Part1
 
         foreach (var problem in problems)
         {
-            grandTotal += SolveProblem(problem);
+            grandTotal += ProblemService.SolveProblem(problem);
         }
 
         return grandTotal;
-    }
-
-    private static ulong SolveProblem(Problem problem)
-    {
-        var solution = problem.Numbers.First();
-
-        var numbersToApplyOperatorOn = problem.Numbers.Skip(1);
-
-        foreach (var number in numbersToApplyOperatorOn)
-        {
-            solution = ApplyOperator(solution, number, problem.Operator);
-        }
-
-        return solution;
-    }
-
-    private static ulong ApplyOperator(ulong solution, ulong number, char @operator)
-    {
-        if (@operator == '+') 
-        {
-            return solution + number;
-        }
-        if (@operator == '*')
-        {
-            return solution * number;
-        }
-
-        throw new ArgumentException($"Unknown operator '{@operator}'");
     }
 }

@@ -9,8 +9,16 @@ namespace AdventOfCode2025.Day6;
 
 public static class Part2
 {
-    public static int Solve(List<Problem> problems)
+    public static ulong Solve(List<Problem> problems)
     {
-        return 0;
+        var grandTotal = 0ul;
+
+        foreach (var problem in problems)
+        {
+            ProblemService.GetNumbersFromFields(problem);
+            grandTotal += ProblemService.SolveProblem(problem);
+        }
+
+        return grandTotal;
     }
 }

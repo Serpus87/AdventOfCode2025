@@ -20,7 +20,10 @@ public static class Day6
         // firstTry: 6169101504608 - correct!
         Console.WriteLine($"Day6 Part1 Solution: {solutionPart1}");
 
-        var solutionPart2 = Part2.Solve(input);
+        var part2Input = InputReader.GetProblemsWithFields(fileName);
+
+        // firstTry: 10442199710797 - correct
+        var solutionPart2 = Part2.Solve(part2Input);
 
         // firstTry: 
         Console.WriteLine($"Day6 Part2 Solution: {solutionPart2}");

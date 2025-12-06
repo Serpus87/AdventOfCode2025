@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode2025.Day4;
+namespace AdventOfCode2025.Shared;
 
 public class Field
 {
