@@ -9,7 +9,7 @@ namespace AdventOfCode2025.Day6;
 
 public static class Part2
 {
-    public static int Solve()
+    public static int Solve(List<Problem> problems)
     {
         return 0;
     }

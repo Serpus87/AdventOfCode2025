@@ -14,12 +14,12 @@ public class Day6Tests
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0; 
+        var expectedResult = 4277556ul; 
         var fileName = "Example.txt";
-        //var input = InputReader.GetInput(fileName);
+        var input = InputReader.GetProblems(fileName);
 
         // Act
-        var result = Part1.Solve();
+        var result = Part1.Solve(input);
 
         // Assert
         Assert.AreEqual(expectedResult, result);
@@ -31,10 +31,10 @@ public class Day6Tests
         // Arrange
         var expectedResult = 0;
         var fileName = "Example.txt";
-        //var input = InputReader.GetInput(fileName);
+        var input = InputReader.GetProblems(fileName);
 
         // Act
-        var result = Part2.Solve();
+        var result = Part2.Solve(input);
 
         // Assert
         Assert.AreEqual(expectedResult, result);
