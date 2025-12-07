@@ -14,7 +14,7 @@ public class Day7Tests
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 21; 
+        var expectedResult = 21;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day7\\{fileName}");
         var map = MapService.GetMap(input);
@@ -26,11 +26,30 @@ public class Day7Tests
         Assert.AreEqual(expectedResult, result);
     }
 
+    [DataRow(3, 2u)]
+    [DataRow(5, 4u)]
+    [DataRow(7, 8u)]
+    [TestMethod]
+    public void Part2Solve_Example_ReturnsExpectedResult(int numberOfRowsFromTop, uint expectedResult)
+    {
+        // Arrange
+        var fileName = "Example.txt";
+        var input = File.ReadAllLines($"Day7\\{fileName}");
+        input = input.Take(numberOfRowsFromTop).ToArray();
+        var map = MapService.GetMap(input);
+
+        // Act
+        var result = Part2.Solve(map);
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
     [TestMethod]
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0ul;
+        var expectedResult = 40u;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day7\\{fileName}");
         var map = MapService.GetMap(input);

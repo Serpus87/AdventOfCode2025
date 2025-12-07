@@ -13,6 +13,7 @@ public class Map // TODO make base class or interface and put in Shared
     public int NumberOfColumns { get; set; }
     public Field[,] Fields { get; set; }
     public List<Field> FieldsList { get; set; } = new List<Field>();
+    public uint NumberOfTimeLines { get; set; } = 1;
 
     public Map(int numberOfRows, int numberOfColumns)
     {

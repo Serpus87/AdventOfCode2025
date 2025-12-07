@@ -67,6 +67,78 @@ public static class MapService
         }
     }
 
+    public static void FireTachyonsWithTimeLines(Map map)
+    {
+        for (var row = 1; row < map.NumberOfRows; row++)
+        {
+            for (var column = 0; column < map.NumberOfColumns; column++)
+            {
+                var hasSplittedLeft = false;
+                var hasSplittedRight = false;
+                var numberOfNewTimeLines = 1u;
+                if (map.Fields[row - 1, column].Fill == '.' || map.Fields[row - 1, column].Fill == '^')
+                {
+                    continue;
+                }
+
+                if (map.Fields[row, column].Fill == '.')
+                {
+                    map.Fields[row, column].Fill = '|';
+                    map.Fields[row, column].NumberOfTimeLines = map.Fields[row - 1, column].NumberOfTimeLines;
+                    continue;
+                }
+
+                if (map.Fields[row, column].Fill == '|')
+                {
+                    map.Fields[row, column].NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
+                    //numberOfNewTimeLines++;
+                }
+
+                if (map.Fields[row, column].Fill == '^')
+                {
+                    if (column > 0 && map.Fields[row, column - 1].Fill == '|')
+                    {
+                        map.Fields[row, column].HasSplittedBeam = true;
+                        map.Fields[row, column - 1].NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
+                      
+                        hasSplittedLeft = true;
+                    }
+                    if (column > 0 && map.Fields[row, column - 1].Fill == '.')
+                    {
+                        map.Fields[row, column - 1].Fill = '|';
+                        map.Fields[row, column - 1].NumberOfTimeLines = map.Fields[row - 1, column].NumberOfTimeLines;
+                        map.Fields[row, column].HasSplittedBeam = true;
+                        
+
+                        hasSplittedLeft = true;
+                    }
+
+                    if (column < map.NumberOfColumns && map.Fields[row, column + 1].Fill == '|')
+                    {
+                        map.Fields[row, column].HasSplittedBeam = true;
+                        map.Fields[row, column + 1].NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
+
+                        hasSplittedRight = true;
+                    }
+                    if (column < map.NumberOfColumns && map.Fields[row, column + 1].Fill == '.')
+                    {
+                        map.Fields[row, column + 1].Fill = '|';
+                        map.Fields[row, column + 1].NumberOfTimeLines = map.Fields[row - 1, column].NumberOfTimeLines;
+                        map.Fields[row, column].HasSplittedBeam = true;
+                        
+                        hasSplittedRight = true;
+                    }
+                    
+                    if (hasSplittedLeft && hasSplittedRight)
+                    {
+                        numberOfNewTimeLines *= map.Fields[row - 1, column].NumberOfTimeLines;
+                        map.NumberOfTimeLines += numberOfNewTimeLines;
+                    }
+                }
+            }
+        }
+    }
+
     private static Map CreateNewTimeLine(Map originalTimeLineMap)
     {
         var numberOfRows = originalTimeLineMap.NumberOfRows;

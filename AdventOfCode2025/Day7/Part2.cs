@@ -9,8 +9,12 @@ namespace AdventOfCode2025.Day7;
 
 public static class Part2
 {
-    public static ulong Solve(Map map)
+    public static uint Solve(Map map)
     {
-        return 0ul;
+        MapService.FireTachyonsWithTimeLines(map);
+
+        var result = map.NumberOfTimeLines;
+
+        return result;
     }
 }

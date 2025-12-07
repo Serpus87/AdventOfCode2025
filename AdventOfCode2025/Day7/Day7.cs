@@ -23,7 +23,7 @@ public static class Day7
         map = MapService.GetMap(input);
         var solutionPart2 = Part2.Solve(map);
 
-        // firstTry: 
+        // firstTry: 939602039 - too low
         Console.WriteLine($"Day7 Part2 Solution: {solutionPart2}");
     }
 }
