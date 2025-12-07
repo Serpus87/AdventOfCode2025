@@ -9,8 +9,12 @@ namespace AdventOfCode2025.Day7;
 
 public static class Part1
 {
-    public static ulong Solve()
+    public static int Solve(Map map)
     {
-        return 0ul;
+        MapService.FireTachyons(map);
+
+        var result = map.FieldsList.Count(x=>x.HasSplittedBeam);
+
+        return result;
     }
 }
