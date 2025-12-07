@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +34,11 @@ public static class MapService
 
     public static void FireTachyons(Map map)
     {
-        for (var row = 1; row < map.NumberOfRows; row++) 
+        for (var row = 1; row < map.NumberOfRows; row++)
         {
-            for (var column = 0; column < map.NumberOfColumns; column++) 
+            for (var column = 0; column < map.NumberOfColumns; column++)
             {
-                if (map.Fields[row-1,column].Fill == '.' || map.Fields[row - 1, column].Fill == '^')
+                if (map.Fields[row - 1, column].Fill == '.' || map.Fields[row - 1, column].Fill == '^')
                 {
                     continue;
                 }
@@ -62,11 +63,53 @@ public static class MapService
                         map.Fields[row, column].HasSplittedBeam = true;
                     }
                 }
-               
-
-                // for debugging
-                //Console.WriteLine($"Total number of times splitted: {map.FieldsList.Count(x=>x.HasSplittedBeam)}");
             }
         }
+    }
+
+    private static Map CreateNewTimeLine(Map originalTimeLineMap)
+    {
+        var numberOfRows = originalTimeLineMap.NumberOfRows;
+        var numberOfColumns = originalTimeLineMap.NumberOfColumns;
+        var newTimeLineMap = new Map(numberOfRows, numberOfColumns);
+        newTimeLineMap.Fields = new Field[numberOfRows, numberOfColumns];
+        newTimeLineMap.Fields.Clone(originalTimeLineMap.Fields, numberOfRows, numberOfColumns);
+        newTimeLineMap.FieldsList = originalTimeLineMap.FieldsList.Clone();
+
+        return newTimeLineMap;
+    }
+
+    private static void Clone(this Field[,] newTimeLineFields, Field[,] originalTimeLineFields, int numberOfRows, int numberOfColumns)
+    {
+        for (var row = 0; row < numberOfRows; row++)
+        {
+            for (var column = 0; column < numberOfColumns; column++)
+            {
+                var newTimeLineField = new Field(new Position(row, column), originalTimeLineFields[row, column].Fill);
+                if (originalTimeLineFields[row, column].HasSplittedBeam)
+                {
+                    newTimeLineField.HasSplittedBeam = true;
+                }
+                newTimeLineFields[row, column] = newTimeLineField;
+            }
+        }
+    }
+
+    private static List<Field> Clone(this List<Field> originalTimeLineFieldsList)
+    {
+        var newTimeLineFieldsList = new List<Field>();
+
+        foreach (var originalTimeLineField in originalTimeLineFieldsList)
+        {
+            var newTimeLineField = new Field(new Position(originalTimeLineField.Position.Row, originalTimeLineField.Position.Column), originalTimeLineField.Fill);
+            if (originalTimeLineField.HasSplittedBeam)
+            {
+                newTimeLineField.HasSplittedBeam = true;
+            }
+
+            newTimeLineFieldsList.Add(newTimeLineField);
+        }
+
+        return newTimeLineFieldsList;
     }
 }
