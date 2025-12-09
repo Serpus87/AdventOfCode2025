@@ -36,23 +36,14 @@ public static class BoxService
         var circuits = new List<Circuit>();
 
         var closestJunctionBoxes = junctionBoxes.OrderBy(x => x.DistanceToClosestJunctionBox).Take(numberOfConnectionsToMake).ToList();
-        //var closestJunctionBoxes = junctionBoxes.OrderBy(x => x.DistanceToClosestJunctionBox).ToList();
-
-        //var connectionCounter = 0;
 
         foreach (var junctionBox in closestJunctionBoxes)
         {
-            //if (connectionCounter == 10)
-            //{
-            //    break;
-            //}
-
             var circuitsToExpand = circuits.Where(x => x.ConnectedBoxIds.Contains(junctionBox.Id) || x.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId)).ToList();
 
             if (circuitsToExpand.Count == 0)
             {
                 circuits.Add(new Circuit([junctionBox.Id, junctionBox.ClosestJunctionBoxId]));
-                //connectionCounter++;
                 continue;
             }
 
@@ -81,8 +72,6 @@ public static class BoxService
 
                 circuits.Add(new Circuit(distinctIds));
             }
-
-            //connectionCounter++;
         }
 
         return circuits;
@@ -128,22 +117,5 @@ public static class BoxService
     private static double GetDistance(double distanceA, double distanceB)
     {
         return Math.Sqrt(distanceA * distanceA + distanceB * distanceB);
-    }
-
-    internal static List<JunctionBox> RemoveDuplicates(List<JunctionBox> junctionBoxes)
-    {
-        var uniqueJunctionBoxes = new List<JunctionBox>();
-
-        foreach (var junctionBox in junctionBoxes)
-        {
-            if (uniqueJunctionBoxes.Any(x=>x.Id == junctionBox.ClosestJunctionBoxId && x.ClosestJunctionBoxId == junctionBox.Id))
-            {
-                continue;
-            }
-
-            uniqueJunctionBoxes.Add(junctionBox);
-        }
-
-        return uniqueJunctionBoxes;
     }
 }
