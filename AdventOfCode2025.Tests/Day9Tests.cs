@@ -14,7 +14,7 @@ public class Day9Tests
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 50;
+        var expectedResult = 50ul;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day9\\{fileName}");
         var tiles = TileService.GetTiles(input);

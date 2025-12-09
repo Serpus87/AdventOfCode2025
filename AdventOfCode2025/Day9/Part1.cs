@@ -9,8 +9,8 @@ namespace AdventOfCode2025.Day9;
 
 public static class Part1
 {
-    public static int Solve(List<Tile> tiles)
+    public static ulong Solve(List<Tile> tiles)
     {
-        return 0;
+        return TileService.GetLargestRectangle(tiles);
     }
 }

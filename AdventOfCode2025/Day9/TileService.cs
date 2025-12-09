@@ -20,4 +20,46 @@ public static class TileService
 
         return tiles;
     }
+
+    public static ulong GetLargestRectangle(List<Tile> tiles)
+    {
+        var largestRectangle = 0ul;
+
+        foreach (var tile in tiles)
+        {
+            var tileLargestRectangle = GetTileLargestRectangle(tile, tiles);
+
+            if (tileLargestRectangle > largestRectangle)
+            {
+                largestRectangle = tileLargestRectangle;
+            }
+        }
+
+        return largestRectangle;
+    }
+
+    private static ulong GetTileLargestRectangle(Tile tile, List<Tile> tiles)
+    {
+        var largestRectangle = 0ul;
+
+        foreach (var tile2 in tiles)
+        {
+            var calculatedRectangle = CalculateRectangle(tile, tile2);
+
+            if (calculatedRectangle > largestRectangle)
+            {
+                largestRectangle = calculatedRectangle;
+            }
+        }
+
+        return largestRectangle;
+    }
+
+    private static ulong CalculateRectangle(Tile tile, Tile tile2)
+    {
+        var xdistance = (ulong)(Math.Abs(tile.XCoordinate - tile2.XCoordinate) + 1);
+        var ydistance = (ulong)(Math.Abs(tile.YCoordinate - tile2.YCoordinate) + 1);
+
+        return xdistance * ydistance;
+    }
 }
