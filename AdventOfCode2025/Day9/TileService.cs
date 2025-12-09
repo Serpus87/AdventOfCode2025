@@ -42,10 +42,15 @@ public static class TileService
     {
         var largestRectangle = 0ul;
 
+        // debug
+        //Print(redTiles, greenTileWrapper);
+        // debug
+
         var counter = 0;
         foreach (var tile in redTiles)
         {
-            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTileWrapper, largestRectangle); // todo include largestRectangleForSpeed
+            //var redTilesToCheck = redTiles.Where(x => x.XCoordinate != tile.XCoordinate || x.YCoordinate != tile.YCoordinate).ToList();
+            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTileWrapper, largestRectangle);
 
             if (tileLargestRectangle > largestRectangle)
             {
@@ -55,6 +60,7 @@ public static class TileService
             counter++;
             Console.WriteLine($"tile {counter} of {redTiles.Count}; LargestRectangle: {largestRectangle}");
         }
+
 
         return largestRectangle;
     }
@@ -80,19 +86,30 @@ public static class TileService
     {
         foreach (var tile2 in redTiles)
         {
+            if (tile.XCoordinate == tile2.XCoordinate || tile.YCoordinate == tile2.YCoordinate) // todo improve this
+            {
+                continue;
+            }
+
             var initialRectangle = CalculateRectangle(tile, tile2);
             if (initialRectangle < largestRectangle)
             {
                 continue;
             }
 
-            var oppositeTiles = GetOppositeTiles(tile,tile2);
+            var oppositeTiles = GetOppositeTiles(tile, tile2);
             var areOppositeTilesWithinBoundaries = AreOppositeTilesWithinBoundaries(oppositeTiles, redTiles, greenTiles);
 
             if (!areOppositeTilesWithinBoundaries)
             {
                 continue;
             }
+
+            //var areTilesWithinBoundaries = AreTilesWithinBoundaries(tile, tile2, oppositeTiles[0], oppositeTiles[1], greenTiles);
+            //if (!areTilesWithinBoundaries)
+            //{
+            //    continue;
+            //}
 
             var calculatedRectangle = CalculateRectangle(tile, tile2);
 
@@ -105,9 +122,21 @@ public static class TileService
         return largestRectangle;
     }
 
+    //private static bool AreTilesWithinBoundaries(Tile tile1, Tile tile2, Tile tile3, Tile tile4, List<Tile> greenTiles)
+    //{
+    //    var greenTilesWithXCoordinate1 = greenTiles.Where(x=>x.XCoordinate == tile1.XCoordinate).ToList();
+    //    var greenTilesWithXCoordinate2 = greenTiles.Where(x=>x.XCoordinate == tile2.XCoordinate).ToList();
+    //    var greenTilesWithYCoordinate1 = greenTiles.Where(x => x.YCoordinate == tile1.YCoordinate).ToList();
+    //    var greenTilesWithYCoordinate2 = greenTiles.Where(x => x.YCoordinate == tile2.YCoordinate).ToList();
+
+    //    var check1 = greenTilesWithXCoordinate1.Any(x => x.YCoordinate > tile1.YCoordinate && x.YCoordinate < tile4.YCoordinate);
+
+    //    return check1;
+    //}
+
     private static bool AreOppositeTilesWithinBoundaries(List<Tile> oppositeTiles, List<Tile> redTiles, List<Tile> greenTiles)
     {
-        var isTile1RedOrGreen = IsTileWithinBoundaries(oppositeTiles.First(),redTiles,greenTiles);
+        var isTile1RedOrGreen = IsTileWithinBoundaries(oppositeTiles.First(), redTiles, greenTiles);
         var isTile2RedOrGreen = IsTileWithinBoundaries(oppositeTiles.Last(), redTiles, greenTiles);
 
         return isTile1RedOrGreen && isTile2RedOrGreen;
@@ -129,8 +158,8 @@ public static class TileService
 
         if (redTiles.Any(x => x.XCoordinate == tileXCoordinate))
         {
-            minRedXCoordinate = redTiles.Min(x=>x.XCoordinate);
-            maxRedXCoordinate = redTiles.Max(x=>x.XCoordinate);
+            minRedXCoordinate = redTiles.Min(x => x.XCoordinate);
+            maxRedXCoordinate = redTiles.Max(x => x.XCoordinate);
             minRedYCoordinate = redTiles.Where(x => x.XCoordinate == tileXCoordinate).Min(x => x.YCoordinate);
             maxRedYCoordinate = redTiles.Where(x => x.XCoordinate == tileXCoordinate).Max(x => x.YCoordinate);
         }
@@ -182,15 +211,15 @@ public static class TileService
     {
         var greenTileWrapper = new List<Tile>();
 
-        var redTileXCoordinates = redTiles.Select(x=> x.XCoordinate).Distinct();
+        var redTileXCoordinates = redTiles.Select(x => x.XCoordinate).Distinct();
 
         foreach (var xCoordinate in redTileXCoordinates)
         {
-            var redTilesOnXCoordinate = redTiles.Where(x=>x.XCoordinate == xCoordinate);
+            var redTilesOnXCoordinate = redTiles.Where(x => x.XCoordinate == xCoordinate);
 
             for (var yCoordinate = redTilesOnXCoordinate.Min(x => x.YCoordinate) + 1; yCoordinate < redTilesOnXCoordinate.Max(x => x.YCoordinate); yCoordinate++)
             {
-                if (redTiles.Any(x=>x.XCoordinate == xCoordinate && x.YCoordinate == yCoordinate))
+                if (redTiles.Any(x => x.XCoordinate == xCoordinate && x.YCoordinate == yCoordinate))
                 {
                     continue;
                 }
@@ -260,4 +289,27 @@ public static class TileService
     //    return greenTiles;
     //}
 
+    private static void Print(List<Tile> redTiles, List<Tile> greenTileWrapper)
+    {
+        for (var i = redTiles.Min(x => x.XCoordinate); i <= redTiles.Max(x => x.XCoordinate); i++)
+        {
+            var stringToPrint = "";
+            for (int j = redTiles.Min(x => x.YCoordinate); j <= redTiles.Max(x => x.YCoordinate); j++)
+            {
+                if (redTiles.Any(x => x.XCoordinate == i && x.YCoordinate == j))
+                {
+                    stringToPrint += "#";
+                    continue;
+                }
+                if (greenTileWrapper.Any(x => x.XCoordinate == i && x.YCoordinate == j))
+                {
+                    stringToPrint += "X";
+                    continue;
+                }
+                stringToPrint += ".";
+            }
+
+            Console.WriteLine(stringToPrint);
+        }
+    }
 }

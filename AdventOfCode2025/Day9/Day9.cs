@@ -18,7 +18,7 @@ public static class Day9
         var solutionPart1 = Part1.Solve(redTiles);
 
         // firstTry: 2147314224 -- too low
-        // secondTry: 4754955192
+        // secondTry: 4754955192 -- correct
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
         redTiles = TileService.GetRedTiles(input);
