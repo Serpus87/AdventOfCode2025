@@ -11,8 +11,8 @@ public static class Part2
 {
     public static ulong Solve(List<Tile> redTiles)
     {
-        var greenTiles = TileService.GetGreenTiles(redTiles);
-        var largestRectangle = TileService.GetLargestRectangle(redTiles,greenTiles);
+        var greenTileWrapper = TileService.GetGreenTileWrapper(redTiles);
+        var largestRectangle = TileService.GetLargestRectangle(redTiles,greenTileWrapper);
 
         return largestRectangle;
     }
