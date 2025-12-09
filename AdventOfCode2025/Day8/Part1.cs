@@ -15,6 +15,7 @@ public static class Part1
 
         var junctionBoxesToMakeCircuitsWith = BoxService.RemoveDuplicates(junctionBoxes);
         var circuits = BoxService.MakeShortestConnections(junctionBoxesToMakeCircuitsWith, 10);
+        //var circuits = BoxService.MakeShortestConnections(junctionBoxes, 10);
 
         var threeLargestCircuits = circuits.OrderByDescending(x=>x.ConnectedBoxIds.Count).Take(3).ToList();
 

@@ -35,15 +35,24 @@ public static class BoxService
     {
         var circuits = new List<Circuit>();
 
-        var closestJunctionBoxes = junctionBoxes.OrderBy(x => x.DistanceToClosestJunctionBox).Take(numberOfConnectionsToMake).ToList(); 
+        var closestJunctionBoxes = junctionBoxes.OrderBy(x => x.DistanceToClosestJunctionBox).Take(numberOfConnectionsToMake).ToList();
+        //var closestJunctionBoxes = junctionBoxes.OrderBy(x => x.DistanceToClosestJunctionBox).ToList();
+
+        //var connectionCounter = 0;
 
         foreach (var junctionBox in closestJunctionBoxes)
         {
+            //if (connectionCounter == 10)
+            //{
+            //    break;
+            //}
+
             var circuitsToExpand = circuits.Where(x => x.ConnectedBoxIds.Contains(junctionBox.Id) || x.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId)).ToList();
 
             if (circuitsToExpand.Count == 0)
             {
                 circuits.Add(new Circuit([junctionBox.Id, junctionBox.ClosestJunctionBoxId]));
+                //connectionCounter++;
                 continue;
             }
 
@@ -52,11 +61,11 @@ public static class BoxService
             {
                 var circuitToExpand = circuitsToExpand.First();
 
-                if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
+                if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
                 {
                     circuitToExpand.ConnectedBoxIds.Add(junctionBox.ClosestJunctionBoxId);
                 }
-                else
+                if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
                 {
                     circuitToExpand.ConnectedBoxIds.Add(junctionBox.Id);
                 }
@@ -72,6 +81,8 @@ public static class BoxService
 
                 circuits.Add(new Circuit(distinctIds));
             }
+
+            //connectionCounter++;
         }
 
         return circuits;
@@ -84,6 +95,11 @@ public static class BoxService
 
         foreach (var junctionBoxToFind in junctionBoxesToFind)
         {
+            if (junctionBox.Id == junctionBoxToFind.ClosestJunctionBoxId)
+            {
+                continue;
+            }
+
             var distance = GetDistance(junctionBox.Location, junctionBoxToFind.Location);
             if (distance < closestDistance)
             {
