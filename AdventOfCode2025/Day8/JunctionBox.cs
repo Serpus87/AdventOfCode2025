@@ -8,16 +8,15 @@ namespace AdventOfCode2025.Day8;
 
 public class JunctionBox
 {
-    public int XCoordinate { get; init; }
-    public int YCoordinate { get; init; }
-    public int ZCoordinate { get; init; }
+    public int Id { get; init; }
+    public Location Location { get; init; }
+    public int ClosestJunctionBoxId { get; set; } = default!;
     public JunctionBox ClosestJunctionBox { get; set; } = default!;
     public decimal DistanceToClosestJunctionBox { get; set; } = default!;
 
-    public JunctionBox(int xCoordinate, int yCoordinate, int zCoordinate)
+    public JunctionBox(int id, Location location)
     {
-        XCoordinate = xCoordinate;
-        YCoordinate = yCoordinate;
-        ZCoordinate = zCoordinate;
+        Id = id;
+        Location = location;
     }
 }

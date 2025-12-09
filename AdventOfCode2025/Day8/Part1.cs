@@ -11,6 +11,15 @@ public static class Part1
 {
     public static ulong Solve(List<JunctionBox> junctionBoxes)
     {
-        return 0ul;
+        BoxService.GetClosestLocations(junctionBoxes);
+
+        var junctionBoxesToMakeCircuitsWith = BoxService.RemoveDuplicates(junctionBoxes);
+        var circuits = BoxService.MakeShortestConnections(junctionBoxesToMakeCircuitsWith, 10);
+
+        var threeLargestCircuits = circuits.OrderByDescending(x=>x.ConnectedBoxIds.Count).Take(3).ToList();
+
+        var result = (ulong)(threeLargestCircuits[0].ConnectedBoxIds.Count * threeLargestCircuits[1].ConnectedBoxIds.Count * threeLargestCircuits[2].ConnectedBoxIds.Count);
+
+        return result;
     }
 }

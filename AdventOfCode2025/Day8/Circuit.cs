@@ -8,5 +8,10 @@ namespace AdventOfCode2025.Day8;
 
 public class Circuit
 {
-    public List<JunctionBox> ConnectedBoxes { get; set; } = new List<JunctionBox>();
+    public List<int> ConnectedBoxIds { get; set; } = new List<int>();
+
+    public Circuit(List<int> connectedBoxIds)
+    {
+        ConnectedBoxIds = connectedBoxIds;
+    }
 }

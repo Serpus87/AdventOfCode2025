@@ -11,10 +11,25 @@ namespace AdventOfCode2025.Tests;
 public class Day8Tests
 {
     [TestMethod]
+    public void GetJunctionBoxes_Example_ReturnsExpectedResult()
+    {
+        // Arrange
+        var expectedResult = 20;
+        var fileName = "Example.txt";
+        var input = File.ReadAllLines($"Day8\\{fileName}");
+
+        // Act
+        var result = BoxService.GetJunctionBoxes(input).Count;
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
+    [TestMethod]
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0u;
+        var expectedResult = 40u;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day8\\{fileName}");
         var boxes = BoxService.GetJunctionBoxes(input);
