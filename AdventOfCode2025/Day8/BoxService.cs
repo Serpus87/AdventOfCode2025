@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,39 +40,55 @@ public static class BoxService
 
         foreach (var junctionBox in closestJunctionBoxes)
         {
+            if(circuits.Any(x => x.ConnectedBoxIds.Contains(junctionBox.Id) && x.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId)))
+            {
+                continue;
+            }
+
             var circuitsToExpand = circuits.Where(x => x.ConnectedBoxIds.Contains(junctionBox.Id) || x.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId)).ToList();
 
             if (circuitsToExpand.Count == 0)
             {
                 circuits.Add(new Circuit([junctionBox.Id, junctionBox.ClosestJunctionBoxId]));
-                continue;
             }
-
-            // add all connected ids
             if (circuitsToExpand.Count == 1)
             {
-                var circuitToExpand = circuitsToExpand.First();
+                var circuitToExpand = circuitsToExpand.Single();
 
-                if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
                 {
                     circuitToExpand.ConnectedBoxIds.Add(junctionBox.ClosestJunctionBoxId);
                 }
-                if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
                 {
                     circuitToExpand.ConnectedBoxIds.Add(junctionBox.Id);
                 }
             }
-            else 
+            if (circuitsToExpand.Count > 1)
             {
+                var distinctIds = circuitsToExpand.SelectMany(x => x.ConnectedBoxIds).Distinct().ToList();
+
                 foreach (var circuitToRemove in circuitsToExpand)
                 {
                     circuits.Remove(circuitToRemove);
                 }
 
-                var distinctIds = circuitsToExpand.SelectMany(x => x.ConnectedBoxIds).Distinct().ToList();
-
                 circuits.Add(new Circuit(distinctIds));
             }
+
+            // print for debug
+            var threeLargestCircuits = circuits.OrderByDescending(x => x.ConnectedBoxIds.Count).Take(3).ToList();
+
+            if (threeLargestCircuits.Count > 2)
+            {
+                var result = (ulong)threeLargestCircuits[0].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[1].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[2].ConnectedBoxIds.Count;
+
+                Console.WriteLine($"Number of circuits: {circuits.Count}; Three largest circuits: {threeLargestCircuits[0].ConnectedBoxIds.Count},{threeLargestCircuits[1].ConnectedBoxIds.Count},{threeLargestCircuits[2].ConnectedBoxIds.Count}");
+
+            }
+            // end
         }
 
         return circuits;
