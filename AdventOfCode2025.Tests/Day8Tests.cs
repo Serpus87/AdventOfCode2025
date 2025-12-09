@@ -33,9 +33,10 @@ public class Day8Tests
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day8\\{fileName}");
         var boxes = BoxService.GetJunctionBoxes(input);
+        var shortestConnectionsToMake = 10;
 
         // Act
-        var result = Part1.Solve(boxes);
+        var result = Part1.Solve(boxes, shortestConnectionsToMake);
 
         // Assert
         Assert.AreEqual(expectedResult, result);

@@ -12,7 +12,7 @@ public class JunctionBox
     public Location Location { get; init; }
     public int ClosestJunctionBoxId { get; set; } = default!;
     public JunctionBox ClosestJunctionBox { get; set; } = default!;
-    public decimal DistanceToClosestJunctionBox { get; set; } = default!;
+    public double DistanceToClosestJunctionBox { get; set; } = default!;
 
     public JunctionBox(int id, Location location)
     {

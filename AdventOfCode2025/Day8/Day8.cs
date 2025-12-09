@@ -14,10 +14,11 @@ public static class Day8
         var fileName = "PuzzleInput.txt";
         var input = File.ReadAllLines($"Day8\\{fileName}");
         var junctionBoxes = BoxService.GetJunctionBoxes(input);
+        var shortestConnectionsToMake = 1000;
 
-        var solutionPart1 = Part1.Solve(junctionBoxes);
+        var solutionPart1 = Part1.Solve(junctionBoxes, shortestConnectionsToMake);
 
-        // firstTry:  
+        // firstTry:  19375 -- too low
         Console.WriteLine($"Day8 Part1 Solution: {solutionPart1}");
 
         junctionBoxes = BoxService.GetJunctionBoxes(input);

@@ -90,7 +90,7 @@ public static class BoxService
 
     private static void FindClosestJunctionBox(this JunctionBox junctionBox, List<JunctionBox> junctionBoxesToFind)
     {
-        var closestDistance = decimal.MaxValue;
+        var closestDistance = double.MaxValue;
         var closestJunctionBox = junctionBox;
 
         foreach (var junctionBoxToFind in junctionBoxesToFind)
@@ -113,7 +113,7 @@ public static class BoxService
         junctionBox.ClosestJunctionBoxId = closestJunctionBox.Id;
     }
 
-    private static decimal GetDistance(Location locationA, Location locationB)
+    private static double GetDistance(Location locationA, Location locationB)
     {
         var xDistance = (double)Math.Abs(locationA.XCoordinate - locationB.XCoordinate);
         var yDistance = (double)Math.Abs(locationA.YCoordinate - locationB.YCoordinate);
@@ -122,7 +122,7 @@ public static class BoxService
         var xyDistance = GetDistance(xDistance, yDistance);
         var xyzDstiance = GetDistance(xyDistance, zDistance);
 
-        return (decimal)xyzDstiance;
+        return xyzDstiance;
     }
 
     private static double GetDistance(double distanceA, double distanceB)
