@@ -13,16 +13,16 @@ public static class Day9
         // read file
         var fileName = "PuzzleInput.txt";
         var input = File.ReadAllLines($"Day9\\{fileName}");
-        var tiles = TileService.GetTiles(input);
+        var redTiles = TileService.GetRedTiles(input);
 
-        var solutionPart1 = Part1.Solve(tiles);
+        var solutionPart1 = Part1.Solve(redTiles);
 
         // firstTry: 2147314224 -- too low
         // secondTry: 4754955192
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
-        tiles = TileService.GetTiles(input);
-        var solutionPart2 = Part2.Solve(tiles);
+        redTiles = TileService.GetRedTiles(input);
+        var solutionPart2 = Part2.Solve(redTiles);
 
         // firstTry: 
         Console.WriteLine($"Day9 Part2 Solution: {solutionPart2}");

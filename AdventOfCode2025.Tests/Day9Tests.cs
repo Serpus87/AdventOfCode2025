@@ -17,7 +17,7 @@ public class Day9Tests
         var expectedResult = 50ul;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day9\\{fileName}");
-        var tiles = TileService.GetTiles(input);
+        var tiles = TileService.GetRedTiles(input);
 
         // Act
         var result = Part1.Solve(tiles);
@@ -30,10 +30,10 @@ public class Day9Tests
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0;
+        var expectedResult = 24ul;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day9\\{fileName}");
-        var tiles = TileService.GetTiles(input);
+        var tiles = TileService.GetRedTiles(input);
 
         // Act
         var result = Part2.Solve(tiles);
