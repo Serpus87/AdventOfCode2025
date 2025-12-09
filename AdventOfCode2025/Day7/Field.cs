@@ -12,7 +12,7 @@ public class Field // TODO make base class or interface and put in Shared
     public Position Position { get; init; }
     public bool HasSplittedBeam { get; set; } = false;
     public char Fill { get; set; }
-    public uint NumberOfTimeLines { get; set; } = 1u;
+    public ulong NumberOfTimeLines { get; set; } = 1ul;
 
     public Field(Position position, char fill)
     {

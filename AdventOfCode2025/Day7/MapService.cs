@@ -73,9 +73,6 @@ public static class MapService
         {
             for (var column = 0; column < map.NumberOfColumns; column++)
             {
-                var hasSplittedLeft = false;
-                var hasSplittedRight = false;
-                var numberOfNewTimeLines = 1u;
                 if (map.Fields[row - 1, column].Fill == '.' || map.Fields[row - 1, column].Fill == '^')
                 {
                     continue;
@@ -100,43 +97,57 @@ public static class MapService
                     {
                         map.Fields[row, column].HasSplittedBeam = true;
                         map.Fields[row, column - 1].NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
-                      
-                        hasSplittedLeft = true;
                     }
                     if (column > 0 && map.Fields[row, column - 1].Fill == '.')
                     {
                         map.Fields[row, column - 1].Fill = '|';
                         map.Fields[row, column - 1].NumberOfTimeLines = map.Fields[row - 1, column].NumberOfTimeLines;
                         map.Fields[row, column].HasSplittedBeam = true;
-                        
-
-                        hasSplittedLeft = true;
                     }
-
                     if (column < map.NumberOfColumns && map.Fields[row, column + 1].Fill == '|')
                     {
                         map.Fields[row, column].HasSplittedBeam = true;
                         map.Fields[row, column + 1].NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
-
-                        hasSplittedRight = true;
                     }
                     if (column < map.NumberOfColumns && map.Fields[row, column + 1].Fill == '.')
                     {
                         map.Fields[row, column + 1].Fill = '|';
                         map.Fields[row, column + 1].NumberOfTimeLines = map.Fields[row - 1, column].NumberOfTimeLines;
                         map.Fields[row, column].HasSplittedBeam = true;
-                        
-                        hasSplittedRight = true;
                     }
-                    
-                    if (hasSplittedLeft && hasSplittedRight)
+
+                    // don't forget the ending timelines:
+                    if ((column > 0 && map.Fields[row, column - 1].Fill == '^' && column < map.NumberOfColumns && map.Fields[row, column + 1].Fill == '^')
+                        || (column == 0 && map.Fields[row, column + 1].Fill == '^')
+                        || (column == map.NumberOfColumns && map.Fields[row, column - 1].Fill == '^'))
                     {
-                        numberOfNewTimeLines *= map.Fields[row - 1, column].NumberOfTimeLines;
-                        map.NumberOfTimeLines += numberOfNewTimeLines;
+                        map.NumberOfTimeLines += map.Fields[row - 1, column].NumberOfTimeLines;
                     }
                 }
             }
+
+            //Print(map); // for debug
         }
+    }
+
+    private static void Print(Map map)
+    {
+        for (int i = 0; i < map.NumberOfRows; i++)
+        {
+            var stringToPrint = "";
+            for (int j = 0; j < map.NumberOfColumns; j++)
+            {
+                var charToPrint = map.Fields[i, j].Fill.ToString();
+                if (charToPrint == "|")
+                {
+                    charToPrint = map.Fields[i, j].NumberOfTimeLines.ToString();
+                }
+
+                stringToPrint += charToPrint;
+            }
+            Console.WriteLine(stringToPrint);
+        }
+        Console.WriteLine("--------------------------------------------------------------------------------------------------------------");
     }
 
     private static Map CreateNewTimeLine(Map originalTimeLineMap)

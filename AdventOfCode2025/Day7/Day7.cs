@@ -24,6 +24,7 @@ public static class Day7
         var solutionPart2 = Part2.Solve(map);
 
         // firstTry: 939602039 - too low
+        // secondTry: 34339203133559
         Console.WriteLine($"Day7 Part2 Solution: {solutionPart2}");
     }
 }
