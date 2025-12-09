@@ -43,6 +43,42 @@ public class Day8Tests
     }
 
     [TestMethod]
+    public void GetClosestLocations_PuzzleInput_PassesBasicChecks()
+    {
+        // Arrange
+        var fileName = "PuzzleInput.txt";
+        var input = File.ReadAllLines($"Day8\\{fileName}");
+        var boxes = BoxService.GetJunctionBoxes(input);
+
+        // Act
+        BoxService.GetClosestLocations(boxes);
+
+        // Assert
+        Assert.AreEqual(0,boxes.Count(x=>x.Id == x.ClosestJunctionBoxId));
+    }
+
+    [TestMethod]
+    public void MakeShortestConnections_PuzzleInput_PassesBasicChecks()
+    {
+        // Arrange
+        var fileName = "PuzzleInput.txt";
+        var input = File.ReadAllLines($"Day8\\{fileName}");
+        var boxes = BoxService.GetJunctionBoxes(input);
+        var shortestConnectionsToMake = 1000;
+
+        BoxService.GetClosestLocations(boxes);
+
+        // Act
+        var result = BoxService.MakeShortestConnections(boxes, shortestConnectionsToMake);
+        var orderedResult = result.OrderByDescending(x=>x.ConnectedBoxIds.Count);
+
+        // Assert
+        Assert.AreEqual(result.SelectMany(x => x.ConnectedBoxIds).Count(), shortestConnectionsToMake);
+        Assert.AreEqual(result.SelectMany(x => x.ConnectedBoxIds).Count(), boxes.Count);
+        Assert.AreEqual(result.SelectMany(x => x.ConnectedBoxIds).Count(), result.SelectMany(x => x.ConnectedBoxIds).Distinct().Count());
+    }
+
+    [TestMethod]
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
