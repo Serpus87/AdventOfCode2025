@@ -42,14 +42,18 @@ public static class TileService
     {
         var largestRectangle = 0ul;
 
+        var counter = 0;
         foreach (var tile in redTiles)
         {
-            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTileWrapper); // todo include largestRectangleForSpeed
+            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTileWrapper, largestRectangle); // todo include largestRectangleForSpeed
 
             if (tileLargestRectangle > largestRectangle)
             {
                 largestRectangle = tileLargestRectangle;
             }
+
+            counter++;
+            Console.WriteLine($"tile {counter} of {redTiles.Count}; LargestRectangle: {largestRectangle}");
         }
 
         return largestRectangle;
@@ -72,12 +76,16 @@ public static class TileService
         return largestRectangle;
     }
 
-    private static ulong GetTileLargestRectangle(Tile tile, List<Tile> redTiles, List<Tile> greenTiles)
+    private static ulong GetTileLargestRectangle(Tile tile, List<Tile> redTiles, List<Tile> greenTiles, ulong largestRectangle)
     {
-        var largestRectangle = 0ul;
-
         foreach (var tile2 in redTiles)
         {
+            var initialRectangle = CalculateRectangle(tile, tile2);
+            if (initialRectangle < largestRectangle)
+            {
+                continue;
+            }
+
             var oppositeTiles = GetOppositeTiles(tile,tile2);
             var areOppositeTilesWithinBoundaries = AreOppositeTilesWithinBoundaries(oppositeTiles, redTiles, greenTiles);
 
