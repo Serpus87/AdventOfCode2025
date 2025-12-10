@@ -82,7 +82,7 @@ public class Day8Tests
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0u;
+        var expectedResult = 25272u;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day8\\{fileName}");
         var boxes = BoxService.GetJunctionBoxes(input);
