@@ -11,13 +11,15 @@ public static class Part2
 {
     public static ulong Solve(List<JunctionBox> junctionBoxes)
     {
-        var circuits = new List<Circuit>();
-        var shortestConnections = new List<Connection> ();
         var nextShortestConnection = new Connection(0, 0, 0);
+
+        var minimumNumberOfConnectionsNecessary = junctionBoxes.Count - 1;
+        var shortestConnections = BoxService.GetShortestConnections(junctionBoxes, minimumNumberOfConnectionsNecessary);
+        var circuits = BoxService.GetCircuits(shortestConnections);
+
         // get shortest connection
         // make circuit
         // keep doing this until circuits.Count == 1 && circuits.Ids contains all ids
-
         var shouldRun = true;
 
         while (shouldRun) 
@@ -28,6 +30,7 @@ public static class Part2
 
             //shouldRun = !(circuits.Count == 1 && circuits.FirstOrDefault()?.ConnectedBoxIds.Distinct() == junctionBoxes.Select(x => x.Id));
             shouldRun = !(circuits.FirstOrDefault()?.ConnectedBoxIds.Count == junctionBoxes.Count);
+            Console.WriteLine($"Number of circuits: {circuits.Count}; Number of connections left to add: {junctionBoxes.Count - circuits.First(x=>x.ConnectedBoxIds.Count == circuits.Max(x=>x.ConnectedBoxIds.Count)).ConnectedBoxIds.Count}");
         }
 
         var x1 = junctionBoxes.First(x => x.Id == nextShortestConnection.JunctionBoxId1).Location.XCoordinate;
