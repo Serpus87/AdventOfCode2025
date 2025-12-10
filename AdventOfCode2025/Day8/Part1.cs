@@ -13,7 +13,8 @@ public static class Part1
     {
         var shortestConnections = BoxService.GetShortestConnections(junctionBoxes, shortestConnectionsToMake);
 
-        var circuits = BoxService.MakeShortestConnections(junctionBoxes, shortestConnectionsToMake);
+        //var circuits = BoxService.MakeShortestConnections(junctionBoxes, shortestConnectionsToMake);
+        var circuits = BoxService.GetCircuits(shortestConnections);
         var threeLargestCircuits = circuits.OrderByDescending(x=>x.ConnectedBoxIds.Count).Take(3).ToList();
 
         var result = (ulong)threeLargestCircuits[0].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[1].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[2].ConnectedBoxIds.Count;

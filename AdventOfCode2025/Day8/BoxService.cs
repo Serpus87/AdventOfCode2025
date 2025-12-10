@@ -31,6 +31,29 @@ public static class BoxService
         // loop through boxes
         // calculate distance to all other boxes
         // if distance is within shortestConnections add or replace
+        foreach (var junctionBox1 in junctionBoxes)
+        {
+            foreach (var junctionBox2 in junctionBoxes.Where(x => x.Id != junctionBox1.Id).ToList())
+            {
+                if (shortestConnections.Any(x=>x.JunctionBoxId1 == junctionBox2.Id && x.JunctionBoxId2 == junctionBox1.Id))
+                {
+                    continue;
+                }
+
+                var distance = GetDistance(junctionBox1.Location, junctionBox2.Location);
+
+                if (shortestConnections.Count < numberOfConnectionsToMake)
+                {
+                    shortestConnections.Add(new Connection(junctionBox1.Id, junctionBox2.Id, distance));
+                    continue;
+                }
+                if (distance < shortestConnections.Max(x=>x.Distance))
+                {
+                    shortestConnections.RemoveAt(shortestConnections.IndexOf(shortestConnections.MaxBy(x => x.Distance)!));
+                    shortestConnections.Add(new Connection(junctionBox1.Id, junctionBox2.Id, distance));
+                }
+            }
+        }
 
         return shortestConnections;
     }
@@ -41,6 +64,66 @@ public static class BoxService
         {
             junctionBox.FindClosestJunctionBox(junctionBoxes.Where(x => x.Id != junctionBox.Id).ToList());
         }
+    }
+
+    public static List<Circuit> GetCircuits(List<Connection> shortestConnections)
+    {
+        var circuits = new List<Circuit>();
+
+        foreach (var connection in shortestConnections)
+        {
+            if (circuits.Any(x => x.ConnectedBoxIds.Contains(connection.JunctionBoxId1) && x.ConnectedBoxIds.Contains(connection.JunctionBoxId2)))
+            {
+                continue;
+            }
+
+            var circuitsToExpand = circuits.Where(x => x.ConnectedBoxIds.Contains(connection.JunctionBoxId1) || x.ConnectedBoxIds.Contains(connection.JunctionBoxId2)).ToList();
+
+            if (circuitsToExpand.Count == 0)
+            {
+                circuits.Add(new Circuit([connection.JunctionBoxId1, connection.JunctionBoxId2]));
+            }
+            if (circuitsToExpand.Count == 1)
+            {
+                var circuitToExpand = circuitsToExpand.Single();
+
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(connection.JunctionBoxId2))
+                {
+                    circuitToExpand.ConnectedBoxIds.Add(connection.JunctionBoxId2);
+                }
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(connection.JunctionBoxId1))
+                {
+                    circuitToExpand.ConnectedBoxIds.Add(connection.JunctionBoxId1);
+                }
+            }
+            if (circuitsToExpand.Count > 1)
+            {
+                var distinctIds = circuitsToExpand.SelectMany(x => x.ConnectedBoxIds).Distinct().ToList();
+
+                foreach (var circuitToRemove in circuitsToExpand)
+                {
+                    circuits.Remove(circuitToRemove);
+                }
+
+                circuits.Add(new Circuit(distinctIds));
+            }
+
+            // print for debug
+            var threeLargestCircuits = circuits.OrderByDescending(x => x.ConnectedBoxIds.Count).Take(3).ToList();
+
+            if (threeLargestCircuits.Count > 2)
+            {
+                var result = (ulong)threeLargestCircuits[0].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[1].ConnectedBoxIds.Count * (ulong)threeLargestCircuits[2].ConnectedBoxIds.Count;
+
+                Console.WriteLine($"Number of circuits: {circuits.Count}; Three largest circuits: {threeLargestCircuits[0].ConnectedBoxIds.Count},{threeLargestCircuits[1].ConnectedBoxIds.Count},{threeLargestCircuits[2].ConnectedBoxIds.Count}");
+
+            }
+            // end
+        }
+
+        return circuits;
     }
 
     public static List<Circuit> MakeShortestConnections(List<JunctionBox> junctionBoxes, int numberOfConnectionsToMake)
@@ -146,4 +229,6 @@ public static class BoxService
     {
         return Math.Sqrt(distanceA * distanceA + distanceB * distanceB);
     }
+
+ 
 }

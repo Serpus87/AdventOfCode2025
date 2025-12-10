@@ -19,6 +19,7 @@ public static class Day8
         var solutionPart1 = Part1.Solve(junctionBoxes, shortestConnectionsToMake);
 
         // firstTry:  19375 -- too low
+        // secondTry: 26400 -- correct
         Console.WriteLine($"Day8 Part1 Solution: {solutionPart1}");
 
         junctionBoxes = BoxService.GetJunctionBoxes(input);
