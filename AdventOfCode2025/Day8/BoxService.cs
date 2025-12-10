@@ -24,6 +24,17 @@ public static class BoxService
         return junctionBoxes;
     }
 
+    public static List<Connection> GetShortestConnections(List<JunctionBox> junctionBoxes, int numberOfConnectionsToMake)
+    {
+        var shortestConnections = new List<Connection>();
+
+        // loop through boxes
+        // calculate distance to all other boxes
+        // if distance is within shortestConnections add or replace
+
+        return shortestConnections;
+    }
+
     public static void GetClosestLocations(List<JunctionBox> junctionBoxes)
     {
         foreach (var junctionBox in junctionBoxes)

@@ -11,7 +11,7 @@ public static class Part1
 {
     public static ulong Solve(List<JunctionBox> junctionBoxes, int shortestConnectionsToMake)
     {
-        BoxService.GetClosestLocations(junctionBoxes);
+        var shortestConnections = BoxService.GetShortestConnections(junctionBoxes, shortestConnectionsToMake);
 
         var circuits = BoxService.MakeShortestConnections(junctionBoxes, shortestConnectionsToMake);
         var threeLargestCircuits = circuits.OrderByDescending(x=>x.ConnectedBoxIds.Count).Take(3).ToList();
