@@ -299,5 +299,75 @@ public static class BoxService
         return Math.Sqrt(distanceA * distanceA + distanceB * distanceB);
     }
 
+    internal static List<Connection> GetNextShortestConnections(List<JunctionBox> junctionBoxes, int minimumNumberOfConnectionsNecessary, List<Connection> shortestConnections)
+    {
+        var nextShortestConnections = new List<Connection>();
 
+        foreach (var junctionBox1 in junctionBoxes)
+        {
+            foreach (var junctionBox2 in junctionBoxes.Where(x => x.Id != junctionBox1.Id).ToList())
+            {
+                if (shortestConnections.Any(x => (x.JunctionBoxId1 == junctionBox1.Id && x.JunctionBoxId2 == junctionBox2.Id) || (x.JunctionBoxId1 == junctionBox2.Id && x.JunctionBoxId2 == junctionBox1.Id)))
+                {
+                    continue;
+                }
+
+                var distance = GetDistance(junctionBox1.Location, junctionBox2.Location);
+
+                if (nextShortestConnections.Count < minimumNumberOfConnectionsNecessary)
+                {
+                    nextShortestConnections.Add(new Connection(junctionBox1.Id, junctionBox2.Id, distance));
+                    continue;
+                }
+                if (distance < nextShortestConnections.Max(x => x.Distance))
+                {
+                    nextShortestConnections.RemoveAt(nextShortestConnections.IndexOf(nextShortestConnections.MaxBy(x => x.Distance)!));
+                    nextShortestConnections.Add(new Connection(junctionBox1.Id, junctionBox2.Id, distance));
+                }
+            }
+        }
+
+        return nextShortestConnections;
+    }
+
+    internal static List<Circuit> AddShortestConnectionsToCircuits(List<Connection> nextShortestConnections, List<Circuit> circuits)
+    {
+        foreach (var shortestConnection in nextShortestConnections)
+        {
+            var circuitsToExpand = circuits.Where(x => x.ConnectedBoxIds.Contains(shortestConnection.JunctionBoxId1) || x.ConnectedBoxIds.Contains(shortestConnection.JunctionBoxId2)).ToList();
+
+            if (circuitsToExpand.Count == 0)
+            {
+                circuits.Add(new Circuit([shortestConnection.JunctionBoxId1, shortestConnection.JunctionBoxId2]));
+            }
+            if (circuitsToExpand.Count == 1)
+            {
+                var circuitToExpand = circuitsToExpand.Single();
+
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(shortestConnection.JunctionBoxId2))
+                {
+                    circuitToExpand.ConnectedBoxIds.Add(shortestConnection.JunctionBoxId2);
+                }
+                //if (circuitToExpand.ConnectedBoxIds.Contains(junctionBox.ClosestJunctionBoxId) && !circuitToExpand.ConnectedBoxIds.Contains(junctionBox.Id))
+                if (!circuitToExpand.ConnectedBoxIds.Contains(shortestConnection.JunctionBoxId1))
+                {
+                    circuitToExpand.ConnectedBoxIds.Add(shortestConnection.JunctionBoxId1);
+                }
+            }
+            if (circuitsToExpand.Count > 1)
+            {
+                var distinctIds = circuitsToExpand.SelectMany(x => x.ConnectedBoxIds).Distinct().ToList();
+
+                foreach (var circuitToRemove in circuitsToExpand)
+                {
+                    circuits.Remove(circuitToRemove);
+                }
+
+                circuits.Add(new Circuit(distinctIds));
+            }
+        }
+
+        return circuits;
+    }
 }
