@@ -5,6 +5,7 @@ using AdventOfCode2025.Day4;
 using AdventOfCode2025.Day5;
 using AdventOfCode2025.Day6;
 using AdventOfCode2025.Day7;
+using AdventOfCode2025.Day8;
 using AdventOfCode2025.Day9;
 
 public class Program
