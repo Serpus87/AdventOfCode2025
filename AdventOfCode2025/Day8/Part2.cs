@@ -15,10 +15,10 @@ public static class Part2
         // 1) calculate all distances between all nodes
         // 2) when expanding circuits, only add new nodes instead of edging within circuit
 
-        //var minimumNumberOfConnectionsNecessary = junctionBoxes.Count - 1; // this is how it should be done
+        var minimumNumberOfConnectionsNecessary = junctionBoxes.Count - 1; // this is how it should be done
         //var minimumNumberOfConnectionsNecessary = junctionBoxes.Count * 2; // this is to check something out
         //var minimumNumberOfConnectionsNecessary = junctionBoxes.Count * 3; // this is to check something out
-        var minimumNumberOfConnectionsNecessary = junctionBoxes.Count * 4; // this is to check something out
+        //var minimumNumberOfConnectionsNecessary = junctionBoxes.Count * 4; // this is to check something out
         var nextShortestConnections = new List<Connection>();
         var shortestConnections = BoxService.GetShortestConnections(junctionBoxes, minimumNumberOfConnectionsNecessary);
         var circuits = BoxService.GetCircuits(shortestConnections);
