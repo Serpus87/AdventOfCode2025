@@ -25,7 +25,7 @@ public static class Day8
         junctionBoxes = BoxService.GetJunctionBoxes(input);
         var solutionPart2 = Part2.Solve(junctionBoxes);
 
-        // firstTry: 
+        // firstTry: 8199963486 -- correct
         Console.WriteLine($"Day8 Part2 Solution: {solutionPart2}");
     }
 }
