@@ -370,4 +370,19 @@ public static class BoxService
 
         return circuits;
     }
+
+    internal static List<Connection> GetAllConnections(List<JunctionBox> junctionBoxes)
+    {
+        var connections = new List<Connection>();
+        for (int i = 1; i <= junctionBoxes.Count; i++)
+        {
+            for (int j = 1; j < i; j++)
+            {
+                var distance = GetDistance(junctionBoxes.Single(x=>x.Id == i).Location, junctionBoxes.Single(y=>y.Id == j).Location);
+                connections.Add(new Connection(i, j, distance));
+            }
+        }
+
+        return connections;
+    }
 }

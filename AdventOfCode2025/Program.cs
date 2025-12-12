@@ -12,6 +12,6 @@ public class Program
 {
     private static void Main(string[] args)
     {
-        Day9.Solve();
+        Day8.Solve();
     }
 }
