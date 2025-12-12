@@ -38,7 +38,7 @@ public static class TileService
         return largestRectangle;
     }
 
-    public static ulong GetLargestRectangle(List<Tile> redTiles, List<Tile> greenTileWrapper)
+    public static ulong GetLargestRectangle(List<Tile> redTiles, List<Tile> greenTiles)
     {
         var largestRectangle = 0ul;
 
@@ -50,7 +50,7 @@ public static class TileService
         foreach (var tile in redTiles)
         {
             //var redTilesToCheck = redTiles.Where(x => x.XCoordinate != tile.XCoordinate || x.YCoordinate != tile.YCoordinate).ToList();
-            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTileWrapper, largestRectangle);
+            var tileLargestRectangle = GetTileLargestRectangle(tile, redTiles, greenTiles, largestRectangle);
 
             if (tileLargestRectangle > largestRectangle)
             {
@@ -91,48 +91,50 @@ public static class TileService
                 continue;
             }
 
-            var initialRectangle = CalculateRectangle(tile, tile2);
-            if (initialRectangle < largestRectangle)
-            {
-                continue;
-            }
-
-            var oppositeTiles = GetOppositeTiles(tile, tile2);
-            var areOppositeTilesWithinBoundaries = AreOppositeTilesWithinBoundaries(oppositeTiles, redTiles, greenTiles);
-
-            if (!areOppositeTilesWithinBoundaries)
-            {
-                continue;
-            }
-
-            //var areTilesWithinBoundaries = AreTilesWithinBoundaries(tile, tile2, oppositeTiles[0], oppositeTiles[1], greenTiles);
-            //if (!areTilesWithinBoundaries)
-            //{
-            //    continue;
-            //}
-
             var calculatedRectangle = CalculateRectangle(tile, tile2);
-
-            if (calculatedRectangle > largestRectangle)
+            if (calculatedRectangle <= largestRectangle)
             {
-                largestRectangle = calculatedRectangle;
+                continue;
             }
+
+            //var oppositeTiles = GetOppositeTiles(tile, tile2);
+            var areTilesGreenOrRed = AreTilesGreenOrRed(tile, tile2, redTiles, greenTiles);
+            //var areOppositeTilesWithinBoundaries = AreOppositeTilesWithinBoundaries(oppositeTiles, redTiles, greenTiles);
+
+            //if (!areOppositeTilesWithinBoundaries)
+            if (!areTilesGreenOrRed)
+            {
+                continue;
+            }
+
+            largestRectangle = calculatedRectangle;
         }
 
         return largestRectangle;
     }
 
-    //private static bool AreTilesWithinBoundaries(Tile tile1, Tile tile2, Tile tile3, Tile tile4, List<Tile> greenTiles)
-    //{
-    //    var greenTilesWithXCoordinate1 = greenTiles.Where(x=>x.XCoordinate == tile1.XCoordinate).ToList();
-    //    var greenTilesWithXCoordinate2 = greenTiles.Where(x=>x.XCoordinate == tile2.XCoordinate).ToList();
-    //    var greenTilesWithYCoordinate1 = greenTiles.Where(x => x.YCoordinate == tile1.YCoordinate).ToList();
-    //    var greenTilesWithYCoordinate2 = greenTiles.Where(x => x.YCoordinate == tile2.YCoordinate).ToList();
+    private static bool AreTilesGreenOrRed(Tile tile1, Tile tile2, List<Tile> redTiles, List<Tile> greenTiles)
+    {
+        var allTilesAreGreenOrRed = true;
 
-    //    var check1 = greenTilesWithXCoordinate1.Any(x => x.YCoordinate > tile1.YCoordinate && x.YCoordinate < tile4.YCoordinate);
+        var minXCoordinate = Math.Min(tile1.XCoordinate, tile2.XCoordinate);
+        var maxXCoordinate = Math.Max(tile1.XCoordinate, tile2.XCoordinate);
+        var minYCoordinate = Math.Min(tile1.YCoordinate, tile2.YCoordinate);
+        var maxYCoordinate = Math.Max(tile1.YCoordinate, tile2.YCoordinate);
 
-    //    return check1;
-    //}
+        for (var i = minXCoordinate; i < maxXCoordinate; i++)
+        {
+            for (int j = minYCoordinate; j < maxYCoordinate; j++)
+            {
+                if (!redTiles.Any(x=>x.XCoordinate == i && x.YCoordinate == j) && !greenTiles.Any(x => x.XCoordinate == i && x.YCoordinate == j))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return allTilesAreGreenOrRed;
+    }
 
     private static bool AreOppositeTilesWithinBoundaries(List<Tile> oppositeTiles, List<Tile> redTiles, List<Tile> greenTiles)
     {
@@ -197,16 +199,6 @@ public static class TileService
         return xdistance * ydistance;
     }
 
-    //public static List<Tile> GetGreenTiles(List<Tile> redTiles)
-    //{
-    //    var greenTiles = new List<Tile>();
-
-    //    var greenTileWrapper = GetGreenTileWrapper(redTiles);
-    //    greenTiles = GetGreenTilesFromWrapper(greenTileWrapper, redTiles);
-
-    //    return greenTiles;
-    //}
-
     public static List<Tile> GetGreenTileWrapper(List<Tile> redTiles)
     {
         var greenTileWrapper = new List<Tile>();
@@ -245,49 +237,53 @@ public static class TileService
             }
         }
 
+       //// debug
+        //Print(redTiles, greenTileWrapper);
+       //// debug
+
         return greenTileWrapper;
     }
 
-    // don't actually need all this, 
-    //private static List<Tile> GetGreenTilesFromWrapper(List<Tile> greenTiles, List<Tile> redTiles)
-    //{
-    //    for (int xCoordinate = redTiles.Min(x=>x.XCoordinate); xCoordinate < redTiles.Max(x => x.XCoordinate); xCoordinate++)
-    //    {
-    //        int? minRedYCoordinate = null;
-    //        int? maxRedYCoordinate = null;
-    //        int? minGreenYCoordinate = null;
-    //        int? maxGreenYCoordinate = null;
+    //don't actually need all this, 
+    public static List<Tile> GetGreenTilesFromWrapper(List<Tile> greenTiles, List<Tile> redTiles)
+    {
+        for (int xCoordinate = redTiles.Min(x => x.XCoordinate); xCoordinate < redTiles.Max(x => x.XCoordinate); xCoordinate++)
+        {
+            int? minRedYCoordinate = null;
+            int? maxRedYCoordinate = null;
+            int? minGreenYCoordinate = null;
+            int? maxGreenYCoordinate = null;
 
-    //        if (redTiles.Any(x => x.XCoordinate == xCoordinate))
-    //        {
-    //            minRedYCoordinate = redTiles.Where(x => x.XCoordinate == xCoordinate).Min(x => x.YCoordinate);
-    //            maxRedYCoordinate = redTiles.Where(x => x.XCoordinate == xCoordinate).Max(x => x.YCoordinate);
-    //        }
+            if (redTiles.Any(x => x.XCoordinate == xCoordinate))
+            {
+                minRedYCoordinate = redTiles.Where(x => x.XCoordinate == xCoordinate).Min(x => x.YCoordinate);
+                maxRedYCoordinate = redTiles.Where(x => x.XCoordinate == xCoordinate).Max(x => x.YCoordinate);
+            }
 
-    //        if (greenTiles.Any(x => x.XCoordinate == xCoordinate))
-    //        {
-    //            minGreenYCoordinate = greenTiles.Where(x => x.XCoordinate == xCoordinate).Min(x => x.YCoordinate);
-    //            maxGreenYCoordinate = greenTiles.Where(x => x.XCoordinate == xCoordinate).Max(x => x.YCoordinate);
-    //        }
+            if (greenTiles.Any(x => x.XCoordinate == xCoordinate))
+            {
+                minGreenYCoordinate = greenTiles.Where(x => x.XCoordinate == xCoordinate).Min(x => x.YCoordinate);
+                maxGreenYCoordinate = greenTiles.Where(x => x.XCoordinate == xCoordinate).Max(x => x.YCoordinate);
+            }
 
-    //        var minYCoordinate = minRedYCoordinate < minGreenYCoordinate ? minRedYCoordinate : minGreenYCoordinate;
-    //        var maxYCoordinate = maxRedYCoordinate > maxGreenYCoordinate ? maxRedYCoordinate : maxGreenYCoordinate;
+            var minYCoordinate = minRedYCoordinate < minGreenYCoordinate ? minRedYCoordinate : minGreenYCoordinate;
+            var maxYCoordinate = maxRedYCoordinate > maxGreenYCoordinate ? maxRedYCoordinate : maxGreenYCoordinate;
 
-    //        for (int yCoordinate = (int)minYCoordinate!; yCoordinate < maxYCoordinate; yCoordinate++)
-    //        {
-    //            var greenTile = new Tile(xCoordinate, yCoordinate);
+            for (int yCoordinate = (int)minYCoordinate!; yCoordinate < maxYCoordinate; yCoordinate++)
+            {
+                var greenTile = new Tile(xCoordinate, yCoordinate);
 
-    //            if (IsTileRedOrGreen(greenTile, redTiles, greenTiles)) // commented out for speed
-    //            {
-    //                continue;
-    //            }
+                //if (IsTileRedOrGreen(greenTile, redTiles, greenTiles)) // commented out for speed
+                //{
+                //    continue;
+                //}
 
-    //            greenTiles.Add(greenTile);
-    //        }
-    //    }
+                greenTiles.Add(greenTile);
+            }
+        }
 
-    //    return greenTiles;
-    //}
+        return greenTiles;
+    }
 
     private static void Print(List<Tile> redTiles, List<Tile> greenTileWrapper)
     {
