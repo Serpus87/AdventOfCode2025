@@ -13,14 +13,15 @@ public static class Day10
         // read file
         var fileName = "PuzzleInput.txt";
         var input = File.ReadAllLines($"Day10\\{fileName}");
+        var machines = InputReader.GetMachines(input);
 
-        var solutionPart1 = Part1.Solve();
+        var solutionPart1 = Part1.Solve(machines);
 
         // firstTry: 
         // secondTry: 
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
-        var solutionPart2 = Part2.Solve();
+        var solutionPart2 = Part2.Solve(machines);
 
         // firstTry:
         Console.WriteLine($"Day9 Part2 Solution: {solutionPart2}");

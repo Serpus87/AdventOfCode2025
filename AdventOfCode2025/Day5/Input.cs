@@ -5,17 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using AdventOfCode2025.Shared;
 
-namespace AdventOfCode2025.Day5
-{
-    public class Input
-    {
-        public List<IdPair> IdPairs { get; set; }
-        public List<ulong> Ingredients { get; set; }
+namespace AdventOfCode2025.Day5;
 
-        public Input(List<IdPair> idPairs, List<ulong> ingredients)
-        {
-            IdPairs = idPairs;
-            Ingredients = ingredients;
-        }
+public class Input
+{
+    public List<IdPair> IdPairs { get; set; }
+    public List<ulong> Ingredients { get; set; }
+
+    public Input(List<IdPair> idPairs, List<ulong> ingredients)
+    {
+        IdPairs = idPairs;
+        Ingredients = ingredients;
     }
 }

@@ -9,7 +9,7 @@ namespace AdventOfCode2025.Day10;
 
 public static class Part1
 {
-    public static ulong Solve()
+    public static ulong Solve(List<Machine> machines)
     {
         return 0ul;
     }
