@@ -15,11 +15,10 @@ public static class Part2
         var orderedConnections = connections.OrderBy(x => x.Distance).ToList();
 
         var minimumNumberOfConnectionsNecessary = junctionBoxes.Count - 1;
-        var shortestConnections = orderedConnections.Take(minimumNumberOfConnectionsNecessary).ToList();
-        var circuits = BoxService.GetCircuits(shortestConnections);
+        var nextShortestConnections = orderedConnections.Take(minimumNumberOfConnectionsNecessary).ToList();
+        var circuits = BoxService.AddShortestConnectionsToCircuits(nextShortestConnections, new List<Circuit>());
 
-        var nextShortestConnections = new List<Connection>();
-        var numberOfConnectionsMade = shortestConnections.Count;
+        var numberOfConnectionsMade = nextShortestConnections.Count;
 
         var shouldRun = true;
         while (shouldRun)
@@ -28,10 +27,9 @@ public static class Part2
             nextShortestConnections = orderedConnections.Skip(numberOfConnectionsMade).Take(minimumNumberOfConnectionsNecessary).ToList();
             numberOfConnectionsMade += nextShortestConnections.Count;
 
-            shortestConnections.AddRange(nextShortestConnections);
             circuits = BoxService.AddShortestConnectionsToCircuits(nextShortestConnections, circuits);
 
-            shouldRun = !(circuits.FirstOrDefault()?.ConnectedBoxIds.Count == junctionBoxes.Count); // while loop can actually stop before last connection is made; but this is more fun
+            shouldRun = !(circuits.FirstOrDefault()?.ConnectedBoxIds.Count == junctionBoxes.Count);
             Console.WriteLine($"Number of circuits: {circuits.Count}; Number of connections left to add: {junctionBoxes.Count - circuits.First(x => x.ConnectedBoxIds.Count == circuits.Max(x => x.ConnectedBoxIds.Count)).ConnectedBoxIds.Count}");
         }
 
