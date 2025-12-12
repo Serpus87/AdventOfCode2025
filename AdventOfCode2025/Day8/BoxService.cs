@@ -371,7 +371,7 @@ public static class BoxService
         return circuits;
     }
 
-    internal static List<Connection> GetAllConnections(List<JunctionBox> junctionBoxes)
+    internal static List<Connection> GetOrderedConnections(List<JunctionBox> junctionBoxes)
     {
         var connections = new List<Connection>();
         for (int i = 1; i <= junctionBoxes.Count; i++)
@@ -383,6 +383,6 @@ public static class BoxService
             }
         }
 
-        return connections;
+        return connections.OrderBy(x=>x.Distance).ToList();
     }
 }

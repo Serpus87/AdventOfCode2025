@@ -11,8 +11,7 @@ public static class Part2
 {
     public static ulong Solve(List<JunctionBox> junctionBoxes)
     {
-        var connections = BoxService.GetAllConnections(junctionBoxes);
-        var orderedConnections = connections.OrderBy(x => x.Distance).ToList();
+        var orderedConnections = BoxService.GetOrderedConnections(junctionBoxes);
 
         var minimumNumberOfConnectionsNecessary = junctionBoxes.Count - 1;
         var nextShortestConnections = orderedConnections.Take(minimumNumberOfConnectionsNecessary).ToList();
