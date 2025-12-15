@@ -122,61 +122,266 @@ public static class MachineService
                         continue;
                     }
 
-                    //for (var l = 0; l < numberOfButtons; l++)
-                    //{
-                    //    if (l == k)
-                    //    {
-                    //        continue;
-                    //    }
+                    for (var l = 0; l < numberOfButtons; l++)
+                    {
+                        if (l == k)
+                        {
+                            continue;
+                        }
 
-                    //    for (var m = 0; m < numberOfButtons; m++) 
-                    //    {
-                    //        if (m == l)
-                    //        {
-                    //            continue;
-                    //        }
+                        var level4StartState = level3EndState.Clone();
+                        var level4EndState = level4StartState.Clone();
 
-                    //        for (var n = 0; n < numberOfButtons; n++) 
-                    //        {
-                    //            if (n == m)
-                    //            {
-                    //                continue;
-                    //            }
+                        // press button
+                        level4EndState.PressButton(machine.ButtonWiringSchematics[k]);
 
-                    //            for (var o = 0; o < numberOfButtons; o++) 
-                    //            {
-                    //                if (o == n)
-                    //                {
-                    //                    continue;
-                    //                }
+                        // check answer
+                        if (level4EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                        {
+                            numberOfButtonPressesNecessary.Add(4);
+                            fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                            break;
+                        }
 
-                    //                for (var p = 0; p < numberOfButtons; p++) 
-                    //                {
-                    //                    if (p == o)
-                    //                    {
-                    //                        continue;
-                    //                    }
+                        // check if current state has already been achieved
+                        if (visitedStates.Contains(level4EndState))
+                        {
+                            break; // maybe continue?
+                        }
 
-                    //                    for (var q = 0; q < numberOfButtons; q++) 
-                    //                    {
-                    //                        if (q == p)
-                    //                        {
-                    //                            continue;
-                    //                        }
+                        // add to visitedStates
+                        visitedStates.Add(level4EndState);
 
-                    //                        for (var r = 0; r < numberOfButtons; r++) 
-                    //                        {
-                    //                            if (r == q)
-                    //                            {
-                    //                                continue;
-                    //                            }
-                    //                        }
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
+                        // check if possible to go deeper
+                        if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
+                        {
+                            continue;
+                        }
+
+                        for (var m = 0; m < numberOfButtons; m++)
+                        {
+                            if (m == l)
+                            {
+                                continue;
+                            }
+
+                            var level5StartState = level4EndState.Clone();
+                            var level5EndState = level5StartState.Clone();
+
+                            // press button
+                            level5EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                            // check answer
+                            if (level5EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                            {
+                                numberOfButtonPressesNecessary.Add(5);
+                                fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                break;
+                            }
+
+                            // check if current state has already been achieved
+                            if (visitedStates.Contains(level5EndState))
+                            {
+                                break; // maybe continue?
+                            }
+
+                            // add to visitedStates
+                            visitedStates.Add(level5EndState);
+
+                            // check if possible to go deeper
+                            if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
+                            {
+                                continue;
+                            }
+
+                            for (var n = 0; n < numberOfButtons; n++)
+                            {
+                                if (n == m)
+                                {
+                                    continue;
+                                }
+
+                                var level6StartState = level5EndState.Clone();
+                                var level6EndState = level6StartState.Clone();
+
+                                // press button
+                                level6EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                                // check answer
+                                if (level6EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                                {
+                                    numberOfButtonPressesNecessary.Add(6);
+                                    fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                    break;
+                                }
+
+                                // check if current state has already been achieved
+                                if (visitedStates.Contains(level6EndState))
+                                {
+                                    break; // maybe continue?
+                                }
+
+                                // add to visitedStates
+                                visitedStates.Add(level6EndState);
+
+                                // check if possible to go deeper
+                                if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
+                                {
+                                    continue;
+                                }
+
+                                for (var o = 0; o < numberOfButtons; o++)
+                                {
+                                    if (o == n)
+                                    {
+                                        continue;
+                                    }
+
+                                    var level7StartState = level6EndState.Clone();
+                                    var level7EndState = level7StartState.Clone();
+
+                                    // press button
+                                    level7EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                                    // check answer
+                                    if (level7EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                                    {
+                                        numberOfButtonPressesNecessary.Add(7);
+                                        fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                        break;
+                                    }
+
+                                    // check if current state has already been achieved
+                                    if (visitedStates.Contains(level7EndState))
+                                    {
+                                        break; // maybe continue?
+                                    }
+
+                                    // add to visitedStates
+                                    visitedStates.Add(level7EndState);
+
+                                    // check if possible to go deeper
+                                    if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
+                                    {
+                                        continue;
+                                    }
+
+                                    for (var p = 0; p < numberOfButtons; p++)
+                                    {
+                                        if (p == o)
+                                        {
+                                            continue;
+                                        }
+
+                                        var level8StartState = level7EndState.Clone();
+                                        var level8EndState = level8StartState.Clone();
+
+                                        // press button
+                                        level8EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                                        // check answer
+                                        if (level8EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                                        {
+                                            numberOfButtonPressesNecessary.Add(8);
+                                            fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                            break;
+                                        }
+
+                                        // check if current state has already been achieved
+                                        if (visitedStates.Contains(level8EndState))
+                                        {
+                                            break; // maybe continue?
+                                        }
+
+                                        // add to visitedStates
+                                        visitedStates.Add(level8EndState);
+
+                                        // check if possible to go deeper
+                                        if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
+                                        {
+                                            continue;
+                                        }
+
+                                        for (var q = 0; q < numberOfButtons; q++)
+                                        {
+                                            if (q == p)
+                                            {
+                                                continue;
+                                            }
+
+                                            var level9StartState = level8EndState.Clone();
+                                            var level9EndState = level9StartState.Clone();
+
+                                            // press button
+                                            level9EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                                            // check answer
+                                            if (level9EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                                            {
+                                                numberOfButtonPressesNecessary.Add(9);
+                                                fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                                break;
+                                            }
+
+                                            // check if current state has already been achieved
+                                            if (visitedStates.Contains(level9EndState))
+                                            {
+                                                break; // maybe continue?
+                                            }
+
+                                            // add to visitedStates
+                                            visitedStates.Add(level9EndState);
+
+                                            // check if possible to go deeper
+                                            if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
+                                            {
+                                                continue;
+                                            }
+
+                                            for (var r = 0; r < numberOfButtons; r++)
+                                            {
+                                                if (r == q)
+                                                {
+                                                    continue;
+                                                }
+
+                                                var level10StartState = level9EndState.Clone();
+                                                var level10EndState = level10StartState.Clone();
+
+                                                // press button
+                                                level10EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                                                // check answer
+                                                if (level10EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                                                {
+                                                    numberOfButtonPressesNecessary.Add(10);
+                                                    fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                                                    break;
+                                                }
+
+                                                // check if current state has already been achieved
+                                                if (visitedStates.Contains(level10EndState))
+                                                {
+                                                    break; // maybe continue?
+                                                }
+
+                                                // add to visitedStates
+                                                visitedStates.Add(level10EndState);
+
+                                                // check if possible to go deeper
+                                                if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
+                                                {
+                                                    continue;
+                                                }
+
+                                                throw new ArgumentException("need to go deeper?!?!");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
