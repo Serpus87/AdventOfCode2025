@@ -32,13 +32,13 @@ public static class MachineService
             {
                 numberOfButtonPressesNecessary.Add(1);
                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                break;
+                continue; // found it! but maybe break?
             }
 
             // check if current state has already been achieved
-            if (visitedStates.Contains(level1EndState))
+            if (visitedStates.Any(x=>x.SequenceEqual(level1EndState)))
             {
-                break; // maybe continue?
+                continue; // maybe break?
             }
 
             // add to visitedStates
@@ -68,13 +68,13 @@ public static class MachineService
                 {
                     numberOfButtonPressesNecessary.Add(2);
                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                    break;
+                    continue; // found it! but maybe break?
                 }
 
                 // check if current state has already been achieved
-                if (visitedStates.Contains(level2EndState))
+                if (visitedStates.Any(x=>x.SequenceEqual(level2EndState)))
                 {
-                    break; // maybe continue?
+                    continue; // maybe break?
                 }
 
                 // add to visitedStates
@@ -104,13 +104,13 @@ public static class MachineService
                     {
                         numberOfButtonPressesNecessary.Add(3);
                         fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                        break;
+                        continue; // found it! but maybe break?
                     }
 
                     // check if current state has already been achieved
-                    if (visitedStates.Contains(level3EndState))
+                    if (visitedStates.Any(x=>x.SequenceEqual(level3EndState)))
                     {
-                        break; // maybe continue?
+                        continue; // maybe break?
                     }
 
                     // add to visitedStates
@@ -140,13 +140,13 @@ public static class MachineService
                         {
                             numberOfButtonPressesNecessary.Add(4);
                             fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                            break;
+                            continue; // found it! but maybe break?
                         }
 
                         // check if current state has already been achieved
-                        if (visitedStates.Contains(level4EndState))
+                        if (visitedStates.Any(x=>x.SequenceEqual(level4EndState)))
                         {
-                            break; // maybe continue?
+                            continue; // maybe break?
                         }
 
                         // add to visitedStates
@@ -176,13 +176,13 @@ public static class MachineService
                             {
                                 numberOfButtonPressesNecessary.Add(5);
                                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                break;
+                                continue; // found it! but maybe break?
                             }
 
                             // check if current state has already been achieved
-                            if (visitedStates.Contains(level5EndState))
+                            if (visitedStates.Any(x=>x.SequenceEqual(level5EndState)))
                             {
-                                break; // maybe continue?
+                                continue; // maybe break?
                             }
 
                             // add to visitedStates
@@ -212,13 +212,13 @@ public static class MachineService
                                 {
                                     numberOfButtonPressesNecessary.Add(6);
                                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                    break;
+                                    continue; // found it! but maybe break?
                                 }
 
                                 // check if current state has already been achieved
-                                if (visitedStates.Contains(level6EndState))
+                                if (visitedStates.Any(x=>x.SequenceEqual(level6EndState)))
                                 {
-                                    break; // maybe continue?
+                                    continue; // maybe break?
                                 }
 
                                 // add to visitedStates
@@ -248,13 +248,13 @@ public static class MachineService
                                     {
                                         numberOfButtonPressesNecessary.Add(7);
                                         fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                        break;
+                                        continue; // found it! but maybe break?
                                     }
 
                                     // check if current state has already been achieved
-                                    if (visitedStates.Contains(level7EndState))
+                                    if (visitedStates.Any(x=>x.SequenceEqual(level7EndState)))
                                     {
-                                        break; // maybe continue?
+                                        continue; // maybe break?
                                     }
 
                                     // add to visitedStates
@@ -284,13 +284,13 @@ public static class MachineService
                                         {
                                             numberOfButtonPressesNecessary.Add(8);
                                             fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                            break;
+                                            continue; // found it! but maybe break?
                                         }
 
                                         // check if current state has already been achieved
-                                        if (visitedStates.Contains(level8EndState))
+                                        if (visitedStates.Any(x=>x.SequenceEqual(level8EndState)))
                                         {
-                                            break; // maybe continue?
+                                            continue; // maybe break?
                                         }
 
                                         // add to visitedStates
@@ -320,13 +320,13 @@ public static class MachineService
                                             {
                                                 numberOfButtonPressesNecessary.Add(9);
                                                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                                break;
+                                                continue; // found it! but maybe break?
                                             }
 
                                             // check if current state has already been achieved
-                                            if (visitedStates.Contains(level9EndState))
+                                            if (visitedStates.Any(x=>x.SequenceEqual(level9EndState)))
                                             {
-                                                break; // maybe continue?
+                                                continue; // maybe break?
                                             }
 
                                             // add to visitedStates
@@ -356,13 +356,13 @@ public static class MachineService
                                                 {
                                                     numberOfButtonPressesNecessary.Add(10);
                                                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                                    break;
+                                                    continue; // found it! but maybe break?
                                                 }
 
                                                 // check if current state has already been achieved
-                                                if (visitedStates.Contains(level10EndState))
+                                                if (visitedStates.Any(x=>x.SequenceEqual(level10EndState)))
                                                 {
-                                                    break; // maybe continue?
+                                                    continue; // maybe break?
                                                 }
 
                                                 // add to visitedStates

@@ -10,6 +10,25 @@ namespace AdventOfCode2025.Tests;
 [TestClass]
 public class Day10Tests
 {
+    [DataRow(false, false, true)]
+    [DataRow(false, true, false)]
+    [DataRow(true, false, false)]
+    [DataRow(true, true, true)]
+    [TestMethod]
+    public void Contains_ListOfListOfBool_ReturnsExpectedResult(bool list1Bool, bool list2Bool, bool expectedResult)
+    {
+        // Arrange
+        var list1 = new List<List<bool>> { new List<bool> { list1Bool } };
+        var list2 = new List<bool>  { list2Bool } ;
+
+        // Act
+        //var result = list1.Contains(list2);
+        var result = list1.Any(x=> x.SequenceEqual(list2));
+
+        // Assert
+        Assert.AreEqual(expectedResult, result);
+    }
+
     [TestMethod]
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
