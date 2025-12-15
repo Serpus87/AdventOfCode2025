@@ -22,29 +22,30 @@ public static class MachineService
         for (var i = 0; i< numberOfButtons; i++) 
         {
             var level1StartState = startState.Clone();
-            var stateToPressButton = level1StartState.Clone();
+            var level1EndState = level1StartState.Clone();
 
             // press button
-            stateToPressButton.PressButton(machine.ButtonWiringSchematics[i]);
+            level1EndState.PressButton(machine.ButtonWiringSchematics[i]);
 
             // check answer
-            if (stateToPressButton.SequenceEqual(machine.IndicatorLightDiagram))
+            if (level1EndState.SequenceEqual(machine.IndicatorLightDiagram))
             {
                 numberOfButtonPressesNecessary.Add(1);
+                fewestButtonPresses = numberOfButtonPressesNecessary.Min();
                 break;
             }
 
             // check if current state has already been achieved
-            if (visitedStates.Contains(stateToPressButton))
+            if (visitedStates.Contains(level1EndState))
             {
                 break; // maybe continue?
             }
 
             // add to visitedStates
-            visitedStates.Add(stateToPressButton);
+            visitedStates.Add(level1EndState);
 
             // check if possible to go deeper
-            if (machine.IndicatorLightDiagram.Count < 2)
+            if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
             {
                 continue;
             }
@@ -56,13 +57,34 @@ public static class MachineService
                     continue;
                 }
 
-                // press button
+                var level2StartState = level1EndState.Clone();
+                var level2EndState = level2StartState.Clone();
 
-                // check if current state has already been achieved
+                // press button
+                level2EndState.PressButton(machine.ButtonWiringSchematics[j]);
 
                 // check answer
+                if (level2EndState.SequenceEqual(machine.IndicatorLightDiagram))
+                {
+                    numberOfButtonPressesNecessary.Add(2);
+                    fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                    break;
+                }
+
+                // check if current state has already been achieved
+                if (visitedStates.Contains(level2EndState))
+                {
+                    break; // maybe continue?
+                }
+
+                // add to visitedStates
+                visitedStates.Add(level2EndState);
 
                 // check if possible to go deeper
+                if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
+                {
+                    continue;
+                }
 
                 for (var k = 0; k < numberOfButtons; k++)
                 {
@@ -71,61 +93,90 @@ public static class MachineService
                         continue;
                     }
 
-                    for (var l = 0; l < numberOfButtons; l++)
+                    var level3StartState = level2EndState.Clone();
+                    var level3EndState = level3StartState.Clone();
+
+                    // press button
+                    level3EndState.PressButton(machine.ButtonWiringSchematics[k]);
+
+                    // check answer
+                    if (level3EndState.SequenceEqual(machine.IndicatorLightDiagram))
                     {
-                        if (l == k)
-                        {
-                            continue;
-                        }
-
-                        for (var m = 0; m < numberOfButtons; m++) 
-                        {
-                            if (m == l)
-                            {
-                                continue;
-                            }
-
-                            for (var n = 0; n < numberOfButtons; n++) 
-                            {
-                                if (n == m)
-                                {
-                                    continue;
-                                }
-
-                                for (var o = 0; o < numberOfButtons; o++) 
-                                {
-                                    if (o == n)
-                                    {
-                                        continue;
-                                    }
-
-                                    for (var p = 0; p < numberOfButtons; p++) 
-                                    {
-                                        if (p == o)
-                                        {
-                                            continue;
-                                        }
-
-                                        for (var q = 0; q < numberOfButtons; q++) 
-                                        {
-                                            if (q == p)
-                                            {
-                                                continue;
-                                            }
-
-                                            for (var r = 0; r < numberOfButtons; r++) 
-                                            {
-                                                if (r == q)
-                                                {
-                                                    continue;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        numberOfButtonPressesNecessary.Add(3);
+                        fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+                        break;
                     }
+
+                    // check if current state has already been achieved
+                    if (visitedStates.Contains(level3EndState))
+                    {
+                        break; // maybe continue?
+                    }
+
+                    // add to visitedStates
+                    visitedStates.Add(level3EndState);
+
+                    // check if possible to go deeper
+                    if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
+                    {
+                        continue;
+                    }
+
+                    //for (var l = 0; l < numberOfButtons; l++)
+                    //{
+                    //    if (l == k)
+                    //    {
+                    //        continue;
+                    //    }
+
+                    //    for (var m = 0; m < numberOfButtons; m++) 
+                    //    {
+                    //        if (m == l)
+                    //        {
+                    //            continue;
+                    //        }
+
+                    //        for (var n = 0; n < numberOfButtons; n++) 
+                    //        {
+                    //            if (n == m)
+                    //            {
+                    //                continue;
+                    //            }
+
+                    //            for (var o = 0; o < numberOfButtons; o++) 
+                    //            {
+                    //                if (o == n)
+                    //                {
+                    //                    continue;
+                    //                }
+
+                    //                for (var p = 0; p < numberOfButtons; p++) 
+                    //                {
+                    //                    if (p == o)
+                    //                    {
+                    //                        continue;
+                    //                    }
+
+                    //                    for (var q = 0; q < numberOfButtons; q++) 
+                    //                    {
+                    //                        if (q == p)
+                    //                        {
+                    //                            continue;
+                    //                        }
+
+                    //                        for (var r = 0; r < numberOfButtons; r++) 
+                    //                        {
+                    //                            if (r == q)
+                    //                            {
+                    //                                continue;
+                    //                            }
+                    //                        }
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }
@@ -145,6 +196,7 @@ public static class MachineService
             if (lights[(int)buttonWiring] == true)
             {
                 lights[(int)buttonWiring] = false;
+                continue;
             }
             if (lights[(int)buttonWiring] == false)
             {
