@@ -13,10 +13,14 @@ public static class Part1
     {
         var result = 0ul;
 
+        var counter = 0;
+
         foreach (var machine in machines)
         {
             var fewestButtonPresses = MachineService.GetFewestButtonPressesWithTooManyForLoops(machine);
             result += fewestButtonPresses;
+            counter++;
+            Console.WriteLine($"{counter} out of {machines.Count} fewest button presses found!");
         }
 
         return result;
