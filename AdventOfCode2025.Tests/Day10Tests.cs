@@ -14,13 +14,13 @@ public class Day10Tests
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0ul;
+        var expectedResult = 7ul;
         var fileName = "Example.txt";
-        //var input = File.ReadAllLines($"Day9\\{fileName}");
-        //var tiles = TileService.GetRedTiles(input);
+        var input = File.ReadAllLines($"Day10\\{fileName}");
+        var machines = InputReader.GetMachines(input);
 
         // Act
-        var result = Part1.Solve();
+        var result = Part1.Solve(machines);
 
         // Assert
         Assert.AreEqual(expectedResult, result);
@@ -33,10 +33,10 @@ public class Day10Tests
         var expectedResult = 0ul;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day10\\{fileName}");
-        //var tiles = TileService.GetRedTiles(input);
+        var machines = InputReader.GetMachines(input);
 
         // Act
-        var result = Part2.Solve();
+        var result = Part2.Solve(machines);
 
         // Assert
         Assert.AreEqual(expectedResult, result);

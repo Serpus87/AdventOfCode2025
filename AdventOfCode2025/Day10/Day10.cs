@@ -15,6 +15,8 @@ public static class Day10
         var input = File.ReadAllLines($"Day10\\{fileName}");
         var machines = InputReader.GetMachines(input);
 
+        //Console.WriteLine(machines.Max(x=>x.IndicatorLightDiagram.Count));
+
         var solutionPart1 = Part1.Solve(machines);
 
         // firstTry: 

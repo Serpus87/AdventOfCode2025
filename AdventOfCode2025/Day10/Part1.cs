@@ -11,6 +11,14 @@ public static class Part1
 {
     public static ulong Solve(List<Machine> machines)
     {
-        return 0ul;
+        var result = 0ul;
+
+        foreach (var machine in machines)
+        {
+            var fewestButtonPresses = MachineService.GetFewestButtonPressesWithTooManyForLoops(machine);
+            result += fewestButtonPresses;
+        }
+
+        return result;
     }
 }
