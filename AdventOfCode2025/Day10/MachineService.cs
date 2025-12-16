@@ -523,6 +523,24 @@ public static class MachineService
         
     }
 
+    public static ulong GetFewestButtonPressesForJoltageRequirements(Machine machine)
+    {
+        var fewestButtonPresses = ulong.MaxValue;
+        var numberOfButtonPressesNecessary = new List<ulong>();
+
+        var numberOfButtons = machine.ButtonWiringSchematics.Count;
+        var startState = machine.JoltageRequirements.CreateStartState();
+        var stringKey = string.Join("", startState);
+        var visitedStateDictionary = new Dictionary<string, uint>
+        {
+            { stringKey, 0 }
+        };
+
+        fewestButtonPresses = GetFewestButtonPresses(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, 0u);
+
+        return fewestButtonPresses;
+    }
+
     private static ulong GetFewestButtonPresses(Machine machine, List<bool> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, Dictionary<string,uint> visitedStateDictionary, uint recursionCounter)
     {
         recursionCounter++;
@@ -578,6 +596,77 @@ public static class MachineService
         return fewestButtonPresses;
     }
 
+    private static ulong GetFewestButtonPresses(Machine machine, List<uint> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, Dictionary<string, uint> visitedStateDictionary, uint recursionCounter)
+    {
+        recursionCounter++;
+        var numberOfButtons = machine.ButtonWiringSchematics.Count;
+
+        for (var i = 0; i < numberOfButtons; i++)
+        {
+            var levelStartState = startState.Clone();
+            var levelEndState = levelStartState.Clone();
+
+            // press button
+            levelEndState.PressButton(machine.ButtonWiringSchematics[i]);
+            var stringKey = string.Join("", levelEndState);
+            //PrintStateForDebug(level1EndState);
+
+            // check answer
+            if (levelEndState.SequenceEqual(machine.JoltageRequirements))
+            {
+                return recursionCounter;
+            }
+
+            // check if current state has already been achieved
+            if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
+            {
+                if (visitedStateDictionary[stringKey] > recursionCounter)
+                {
+                    visitedStateDictionary[stringKey] = recursionCounter;
+                }
+                else
+                {
+                    continue; // maybe break?
+                }
+            }
+            else
+            {
+                visitedStateDictionary.Add(stringKey, recursionCounter);
+            }
+
+            // check if possible to go deeper
+            if (levelEndState.AreAnyJoltageRequirementsTooBig(machine.JoltageRequirements))
+            {
+                continue;
+            }
+
+            numberOfButtonPressesNecessary.Add(GetFewestButtonPresses(machine, levelEndState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, recursionCounter));
+        }
+
+        if (numberOfButtonPressesNecessary.Count > 0)
+        {
+            fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+        }
+
+        return fewestButtonPresses;
+    }
+
+    private static bool AreAnyJoltageRequirementsTooBig(this List<uint> levelEndState, List<uint> stateToAchieve)
+    {
+        var count = levelEndState.Count;
+        //var noneAreBigger = true;
+
+        for (int i = 0; i < count; i++)
+        {
+            if (levelEndState[i] > stateToAchieve[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static void PrintStateForDebug(List<bool> startState)
     {
         var stringToPrint = "";
@@ -612,6 +701,14 @@ public static class MachineService
         }
     }
 
+    private static void PressButton(this List<uint> joltageRequirement, ButtonWiringSchematic buttonWiringSchematic)
+    {
+        foreach (var buttonWiring in buttonWiringSchematic.ButtonWirings)
+        {
+            joltageRequirement[(int)buttonWiring]++;
+        }
+    }
+
     private static List<bool> Clone(this List<bool> original)
     {
         var clone = new List<bool>();
@@ -624,6 +721,18 @@ public static class MachineService
         return clone;
     }
 
+    private static List<uint> Clone(this List<uint> original)
+    {
+        var clone = new List<uint>();
+
+        foreach (var joltageRequirement in original)
+        {
+            clone.Add(joltageRequirement);
+        }
+
+        return clone;
+    }
+
     private static List<bool> CreateStartState(this List<bool> original)
     {
         var startState = new List<bool>();
@@ -631,6 +740,18 @@ public static class MachineService
         foreach (var light in original)
         {
             startState.Add(false);
+        }
+
+        return startState;
+    }
+
+    private static List<uint> CreateStartState(this List<uint> original)
+    {
+        var startState = new List<uint>();
+
+        foreach (var joltageRequirement in original)
+        {
+            startState.Add(0u);
         }
 
         return startState;
