@@ -168,7 +168,7 @@ public static class MachineService
                         var level4EndState = level4StartState.Clone();
 
                         // press button
-                        level4EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                        level4EndState.PressButton(machine.ButtonWiringSchematics[l]);
                         stringKey = string.Join("", level4EndState);
                         PrintStateForDebug(level4EndState);
 
@@ -214,7 +214,7 @@ public static class MachineService
                             var level5EndState = level5StartState.Clone();
 
                             // press button
-                            level5EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                            level5EndState.PressButton(machine.ButtonWiringSchematics[m]);
                             stringKey = string.Join("", level5EndState);
                             PrintStateForDebug(level5EndState);
 
@@ -260,7 +260,7 @@ public static class MachineService
                                 var level6EndState = level6StartState.Clone();
 
                                 // press button
-                                level6EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                level6EndState.PressButton(machine.ButtonWiringSchematics[n]);
                                 stringKey = string.Join("", level6EndState);
                                 PrintStateForDebug(level6EndState);
 
@@ -306,7 +306,7 @@ public static class MachineService
                                     var level7EndState = level7StartState.Clone();
 
                                     // press button
-                                    level7EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                    level7EndState.PressButton(machine.ButtonWiringSchematics[o]);
                                     stringKey = string.Join("", level7EndState);
                                     PrintStateForDebug(level7EndState);
 
@@ -352,7 +352,7 @@ public static class MachineService
                                         var level8EndState = level8StartState.Clone();
 
                                         // press button
-                                        level8EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                        level8EndState.PressButton(machine.ButtonWiringSchematics[p]);
                                         stringKey = string.Join("", level8EndState);
                                         PrintStateForDebug(level8EndState);
 
@@ -398,7 +398,7 @@ public static class MachineService
                                             var level9EndState = level9StartState.Clone();
 
                                             // press button
-                                            level9EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                            level9EndState.PressButton(machine.ButtonWiringSchematics[q]);
                                             stringKey = string.Join("", level9EndState);
                                             PrintStateForDebug(level9EndState);
 
@@ -444,7 +444,7 @@ public static class MachineService
                                                 var level10EndState = level10StartState.Clone();
 
                                                 // press button
-                                                level10EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                                level10EndState.PressButton(machine.ButtonWiringSchematics[r]);
                                                 stringKey = string.Join("", level10EndState);
                                                 PrintStateForDebug(level10EndState);
 

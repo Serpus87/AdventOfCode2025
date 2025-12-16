@@ -30,6 +30,32 @@ public class Day10Tests
     }
 
     [TestMethod]
+    public void GetFewestButtonPressesWithTooManyForLoops_Machine_ReturnsResultBiggerThanZero()
+    {
+        // Arrange
+        var indicatorLightDiagram = new List<bool> { true, true, true, false, false, true };
+        var buttonWiringSchematics = new List<ButtonWiringSchematic>
+        {
+            new ButtonWiringSchematic(new List<uint>{0u,2u,5u}),
+            new ButtonWiringSchematic(new List<uint>{0u,2u,3u,4u,5u}),
+            new ButtonWiringSchematic(new List<uint>{1u,2u}),
+            new ButtonWiringSchematic(new List<uint>{0u,1u,5u}),
+            new ButtonWiringSchematic(new List<uint>{0u,2u,3u,4u}),
+            new ButtonWiringSchematic(new List<uint>{3u}),
+            new ButtonWiringSchematic(new List<uint>{2u,3u,5u}),
+            new ButtonWiringSchematic(new List<uint>{1u,5u})
+        };
+
+        var machine = new Machine(indicatorLightDiagram, buttonWiringSchematics, new List<uint>());
+
+        // Act
+        var result = MachineService.GetFewestButtonPressesWithTooManyForLoops(machine);
+
+        // Assert
+        Assert.IsTrue(result > 0ul);
+    }
+
+    [TestMethod]
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
