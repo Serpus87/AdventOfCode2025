@@ -22,7 +22,9 @@ public static class MachineService
             { stringKey, 0 }
         };
 
-        for (var i = 0; i< numberOfButtons; i++) 
+        PrintStateForDebug(startState);
+
+        for (var i = 0; i < numberOfButtons; i++)
         {
             var level1StartState = startState.Clone();
             var level1EndState = level1StartState.Clone();
@@ -30,6 +32,7 @@ public static class MachineService
             // press button
             level1EndState.PressButton(machine.ButtonWiringSchematics[i]);
             stringKey = string.Join("", level1EndState);
+            PrintStateForDebug(level1EndState);
 
             // check answer
             if (level1EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -40,7 +43,7 @@ public static class MachineService
             }
 
             // check if current state has already been achieved
-            if (visitedStateDictionary.Any(x=>x.Key.Equals(stringKey)))
+            if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
             {
                 if (visitedStateDictionary[stringKey] > 1)
                 {
@@ -51,16 +54,16 @@ public static class MachineService
                     continue; // maybe break?
                 }
             }
-            else 
+            else
             {
                 visitedStateDictionary.Add(stringKey, 1);
             }
 
-            // check if possible to go deeper
-            if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
-            {
-                continue;
-            }
+            //// check if possible to go deeper
+            //if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
+            //{
+            //    continue;
+            //}
 
             for (var j = 0; j < numberOfButtons; j++)
             {
@@ -75,6 +78,7 @@ public static class MachineService
                 // press button
                 level2EndState.PressButton(machine.ButtonWiringSchematics[j]);
                 stringKey = string.Join("", level2EndState);
+                PrintStateForDebug(level2EndState);
 
                 // check answer
                 if (level2EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -101,11 +105,11 @@ public static class MachineService
                     visitedStateDictionary.Add(stringKey, 2);
                 }
 
-                // check if possible to go deeper
-                if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
-                {
-                    continue;
-                }
+                //// check if possible to go deeper
+                //if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
+                //{
+                //    continue;
+                //}
 
                 for (var k = 0; k < numberOfButtons; k++)
                 {
@@ -120,6 +124,7 @@ public static class MachineService
                     // press button
                     level3EndState.PressButton(machine.ButtonWiringSchematics[k]);
                     stringKey = string.Join("", level3EndState);
+                    PrintStateForDebug(level3EndState);
 
                     // check answer
                     if (level3EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -146,11 +151,11 @@ public static class MachineService
                         visitedStateDictionary.Add(stringKey, 3);
                     }
 
-                    // check if possible to go deeper
-                    if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
-                    {
-                        continue;
-                    }
+                    //// check if possible to go deeper
+                    //if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
+                    //{
+                    //    continue;
+                    //}
 
                     for (var l = 0; l < numberOfButtons; l++)
                     {
@@ -165,6 +170,7 @@ public static class MachineService
                         // press button
                         level4EndState.PressButton(machine.ButtonWiringSchematics[k]);
                         stringKey = string.Join("", level4EndState);
+                        PrintStateForDebug(level4EndState);
 
                         // check answer
                         if (level4EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -191,11 +197,11 @@ public static class MachineService
                             visitedStateDictionary.Add(stringKey, 4);
                         }
 
-                        // check if possible to go deeper
-                        if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
-                        {
-                            continue;
-                        }
+                        //// check if possible to go deeper
+                        //if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
+                        //{
+                        //    continue;
+                        //}
 
                         for (var m = 0; m < numberOfButtons; m++)
                         {
@@ -210,6 +216,7 @@ public static class MachineService
                             // press button
                             level5EndState.PressButton(machine.ButtonWiringSchematics[k]);
                             stringKey = string.Join("", level5EndState);
+                            PrintStateForDebug(level5EndState);
 
                             // check answer
                             if (level5EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -236,11 +243,11 @@ public static class MachineService
                                 visitedStateDictionary.Add(stringKey, 5);
                             }
 
-                            // check if possible to go deeper
-                            if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
-                            {
-                                continue;
-                            }
+                            //// check if possible to go deeper
+                            //if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
+                            //{
+                            //    continue;
+                            //}
 
                             for (var n = 0; n < numberOfButtons; n++)
                             {
@@ -255,6 +262,7 @@ public static class MachineService
                                 // press button
                                 level6EndState.PressButton(machine.ButtonWiringSchematics[k]);
                                 stringKey = string.Join("", level6EndState);
+                                PrintStateForDebug(level6EndState);
 
                                 // check answer
                                 if (level6EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -281,11 +289,11 @@ public static class MachineService
                                     visitedStateDictionary.Add(stringKey, 6);
                                 }
 
-                                // check if possible to go deeper
-                                if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
-                                {
-                                    continue;
-                                }
+                                //// check if possible to go deeper
+                                //if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
+                                //{
+                                //    continue;
+                                //}
 
                                 for (var o = 0; o < numberOfButtons; o++)
                                 {
@@ -300,6 +308,7 @@ public static class MachineService
                                     // press button
                                     level7EndState.PressButton(machine.ButtonWiringSchematics[k]);
                                     stringKey = string.Join("", level7EndState);
+                                    PrintStateForDebug(level7EndState);
 
                                     // check answer
                                     if (level7EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -326,11 +335,11 @@ public static class MachineService
                                         visitedStateDictionary.Add(stringKey, 7);
                                     }
 
-                                    // check if possible to go deeper
-                                    if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
-                                    {
-                                        continue;
-                                    }
+                                    //// check if possible to go deeper
+                                    //if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
+                                    //{
+                                    //    continue;
+                                    //}
 
                                     for (var p = 0; p < numberOfButtons; p++)
                                     {
@@ -345,6 +354,7 @@ public static class MachineService
                                         // press button
                                         level8EndState.PressButton(machine.ButtonWiringSchematics[k]);
                                         stringKey = string.Join("", level8EndState);
+                                        PrintStateForDebug(level8EndState);
 
                                         // check answer
                                         if (level8EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -371,11 +381,11 @@ public static class MachineService
                                             visitedStateDictionary.Add(stringKey, 8);
                                         }
 
-                                        // check if possible to go deeper
-                                        if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
-                                        {
-                                            continue;
-                                        }
+                                        //// check if possible to go deeper
+                                        //if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
+                                        //{
+                                        //    continue;
+                                        //}
 
                                         for (var q = 0; q < numberOfButtons; q++)
                                         {
@@ -390,6 +400,7 @@ public static class MachineService
                                             // press button
                                             level9EndState.PressButton(machine.ButtonWiringSchematics[k]);
                                             stringKey = string.Join("", level9EndState);
+                                            PrintStateForDebug(level9EndState);
 
                                             // check answer
                                             if (level9EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -416,11 +427,11 @@ public static class MachineService
                                                 visitedStateDictionary.Add(stringKey, 9);
                                             }
 
-                                            // check if possible to go deeper
-                                            if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
-                                            {
-                                                continue;
-                                            }
+                                            //// check if possible to go deeper
+                                            //if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
+                                            //{
+                                            //    continue;
+                                            //}
 
                                             for (var r = 0; r < numberOfButtons; r++)
                                             {
@@ -435,6 +446,7 @@ public static class MachineService
                                                 // press button
                                                 level10EndState.PressButton(machine.ButtonWiringSchematics[k]);
                                                 stringKey = string.Join("", level10EndState);
+                                                PrintStateForDebug(level10EndState);
 
                                                 // check answer
                                                 if (level10EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -461,13 +473,13 @@ public static class MachineService
                                                     visitedStateDictionary.Add(stringKey, 10);
                                                 }
 
-                                                // check if possible to go deeper
-                                                if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
-                                                {
-                                                    continue;
-                                                }
-
-                                                throw new ArgumentException("need to go deeper?!?!");
+                                                //// check if possible to go deeper
+                                                //if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
+                                                //{
+                                                //    continue;
+                                                //}
+                                                var temp = true;
+                                                //throw new ArgumentException("need to go deeper?!?!");
                                             }
                                         }
                                     }
@@ -487,9 +499,27 @@ public static class MachineService
         return fewestButtonPresses;
     }
 
+    private static void PrintStateForDebug(List<bool> startState)
+    {
+        var stringToPrint = "";
+        foreach (var lightOn in startState)
+        {
+            if (lightOn)
+            {
+                stringToPrint += "#";
+            }
+            else
+            {
+                stringToPrint += ".";
+            }
+        }
+
+        Console.WriteLine(stringToPrint);
+    }
+
     private static void PressButton(this List<bool> lights, ButtonWiringSchematic buttonWiringSchematic)
     {
-        foreach(var buttonWiring in buttonWiringSchematic.ButtonWirings)
+        foreach (var buttonWiring in buttonWiringSchematic.ButtonWirings)
         {
             if (lights[(int)buttonWiring] == true)
             {
