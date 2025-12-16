@@ -520,7 +520,7 @@ public static class MachineService
 
         //PrintStateForDebug(startState);
 
-        
+
     }
 
     public static ulong GetFewestButtonPressesForJoltageRequirements(Machine machine)
@@ -530,18 +530,19 @@ public static class MachineService
 
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
         var startState = machine.JoltageRequirements.CreateStartState();
-        var stringKey = string.Join("", startState);
+        var stringKey = string.Join(",", startState);
         var visitedStateDictionary = new Dictionary<string, uint>
         {
             { stringKey, 0 }
         };
 
+        Console.WriteLine(stringKey);
         fewestButtonPresses = GetFewestButtonPresses(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, 0u);
 
         return fewestButtonPresses;
     }
 
-    private static ulong GetFewestButtonPresses(Machine machine, List<bool> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, Dictionary<string,uint> visitedStateDictionary, uint recursionCounter)
+    private static ulong GetFewestButtonPresses(Machine machine, List<bool> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, Dictionary<string, uint> visitedStateDictionary, uint recursionCounter)
     {
         recursionCounter++;
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
@@ -608,8 +609,8 @@ public static class MachineService
 
             // press button
             levelEndState.PressButton(machine.ButtonWiringSchematics[i]);
-            var stringKey = string.Join("", levelEndState);
-            //PrintStateForDebug(level1EndState);
+            var stringKey = string.Join(",", levelEndState);
+            Console.WriteLine(stringKey);
 
             // check answer
             if (levelEndState.SequenceEqual(machine.JoltageRequirements))
