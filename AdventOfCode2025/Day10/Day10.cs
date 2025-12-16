@@ -19,8 +19,7 @@ public static class Day10
 
         var solutionPart1 = Part1.Solve(machines);
 
-        // firstTry: 
-        // secondTry: 
+        // firstTry: 268 -- too low
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
         var solutionPart2 = Part2.Solve(machines);

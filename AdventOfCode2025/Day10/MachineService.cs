@@ -16,9 +16,9 @@ public static class MachineService
 
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
         var startState = machine.IndicatorLightDiagram.CreateStartState();
-        var visitedStates = new List<List<bool>> { startState }; // should be dicitonary of list<bool>, number of button presses
-        var visitedStateDictionary = new Dictionary<List<bool>, uint>();
-        visitedStateDictionary.Add(startState, 0);
+        var stringKey = string.Join("", startState);
+        var visitedStateDictionary = new Dictionary<string, uint>();
+        visitedStateDictionary.Add(stringKey, 0);
 
 
         for (var i = 0; i< numberOfButtons; i++) 
@@ -28,6 +28,7 @@ public static class MachineService
 
             // press button
             level1EndState.PressButton(machine.ButtonWiringSchematics[i]);
+            stringKey = string.Join("", level1EndState);
 
             // check answer
             if (level1EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -38,13 +39,11 @@ public static class MachineService
             }
 
             // check if current state has already been achieved
-            if (visitedStateDictionary.Any(x=>x.Key.SequenceEqual(level1EndState)))
+            if (visitedStateDictionary.Any(x=>x.Key.Equals(stringKey)))
             {
-               
-                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level1EndState)).Any(x=>x.Value > 1))
+                if (visitedStateDictionary[stringKey] > 1)
                 {
-                    visitedStateDictionary.Remove(level1EndState);
-                    visitedStateDictionary.Add(level1EndState, 1);
+                    visitedStateDictionary[stringKey] = 1;
                 }
                 else
                 {
@@ -53,7 +52,7 @@ public static class MachineService
             }
             else 
             {
-                visitedStateDictionary.Add(level1EndState, 1);
+                visitedStateDictionary.Add(stringKey, 1);
             }
 
             // check if possible to go deeper
@@ -74,6 +73,7 @@ public static class MachineService
 
                 // press button
                 level2EndState.PressButton(machine.ButtonWiringSchematics[j]);
+                stringKey = string.Join("", level2EndState);
 
                 // check answer
                 if (level2EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -84,12 +84,11 @@ public static class MachineService
                 }
 
                 // check if current state has already been achieved
-                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level2EndState)))
+                if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                 {
-                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level2EndState)).Any(x => x.Value > 2))
+                    if (visitedStateDictionary[stringKey] > 2)
                     {
-                        visitedStateDictionary.Remove(level2EndState);
-                        visitedStateDictionary.Add(level2EndState, 2);
+                        visitedStateDictionary[stringKey] = 2;
                     }
                     else
                     {
@@ -98,7 +97,7 @@ public static class MachineService
                 }
                 else
                 {
-                    visitedStateDictionary.Add(level2EndState, 2);
+                    visitedStateDictionary.Add(stringKey, 2);
                 }
 
                 // check if possible to go deeper
@@ -119,6 +118,7 @@ public static class MachineService
 
                     // press button
                     level3EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                    stringKey = string.Join("", level3EndState);
 
                     // check answer
                     if (level3EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -129,12 +129,11 @@ public static class MachineService
                     }
 
                     // check if current state has already been achieved
-                    if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level3EndState)))
+                    if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                     {
-                        if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level3EndState)).Any(x => x.Value > 3))
+                        if (visitedStateDictionary[stringKey] > 3)
                         {
-                            visitedStateDictionary.Remove(level3EndState);
-                            visitedStateDictionary.Add(level3EndState, 3);
+                            visitedStateDictionary[stringKey] = 3;
                         }
                         else
                         {
@@ -143,7 +142,7 @@ public static class MachineService
                     }
                     else
                     {
-                        visitedStateDictionary.Add(level3EndState, 3);
+                        visitedStateDictionary.Add(stringKey, 3);
                     }
 
                     // check if possible to go deeper
@@ -164,6 +163,7 @@ public static class MachineService
 
                         // press button
                         level4EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                        stringKey = string.Join("", level4EndState);
 
                         // check answer
                         if (level4EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -174,12 +174,11 @@ public static class MachineService
                         }
 
                         // check if current state has already been achieved
-                        if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level4EndState)))
+                        if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                         {
-                            if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level4EndState)).Any(x => x.Value > 4))
+                            if (visitedStateDictionary[stringKey] > 4)
                             {
-                                visitedStateDictionary.Remove(level4EndState);
-                                visitedStateDictionary.Add(level4EndState, 4);
+                                visitedStateDictionary[stringKey] = 4;
                             }
                             else
                             {
@@ -188,7 +187,7 @@ public static class MachineService
                         }
                         else
                         {
-                            visitedStateDictionary.Add(level4EndState, 4);
+                            visitedStateDictionary.Add(stringKey, 4);
                         }
 
                         // check if possible to go deeper
@@ -209,6 +208,7 @@ public static class MachineService
 
                             // press button
                             level5EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                            stringKey = string.Join("", level5EndState);
 
                             // check answer
                             if (level5EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -219,12 +219,11 @@ public static class MachineService
                             }
 
                             // check if current state has already been achieved
-                            if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level5EndState)))
+                            if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                             {
-                                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level5EndState)).Any(x => x.Value > 5))
+                                if (visitedStateDictionary[stringKey] > 5)
                                 {
-                                    visitedStateDictionary.Remove(level5EndState);
-                                    visitedStateDictionary.Add(level5EndState, 5);
+                                    visitedStateDictionary[stringKey] = 5;
                                 }
                                 else
                                 {
@@ -233,7 +232,7 @@ public static class MachineService
                             }
                             else
                             {
-                                visitedStateDictionary.Add(level5EndState, 5);
+                                visitedStateDictionary.Add(stringKey, 5);
                             }
 
                             // check if possible to go deeper
@@ -254,6 +253,7 @@ public static class MachineService
 
                                 // press button
                                 level6EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                stringKey = string.Join("", level6EndState);
 
                                 // check answer
                                 if (level6EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -264,12 +264,11 @@ public static class MachineService
                                 }
 
                                 // check if current state has already been achieved
-                                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level6EndState)))
+                                if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                                 {
-                                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level6EndState)).Any(x => x.Value > 6))
+                                    if (visitedStateDictionary[stringKey] > 6)
                                     {
-                                        visitedStateDictionary.Remove(level6EndState);
-                                        visitedStateDictionary.Add(level6EndState, 6);
+                                        visitedStateDictionary[stringKey] = 6;
                                     }
                                     else
                                     {
@@ -278,7 +277,7 @@ public static class MachineService
                                 }
                                 else
                                 {
-                                    visitedStateDictionary.Add(level6EndState, 6);
+                                    visitedStateDictionary.Add(stringKey, 6);
                                 }
 
                                 // check if possible to go deeper
@@ -299,6 +298,7 @@ public static class MachineService
 
                                     // press button
                                     level7EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                    stringKey = string.Join("", level7EndState);
 
                                     // check answer
                                     if (level7EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -309,12 +309,11 @@ public static class MachineService
                                     }
 
                                     // check if current state has already been achieved
-                                    if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level7EndState)))
+                                    if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                                     {
-                                        if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level7EndState)).Any(x => x.Value > 7))
+                                        if (visitedStateDictionary[stringKey] > 7)
                                         {
-                                            visitedStateDictionary.Remove(level7EndState);
-                                            visitedStateDictionary.Add(level7EndState, 7);
+                                            visitedStateDictionary[stringKey] = 7;
                                         }
                                         else
                                         {
@@ -323,7 +322,7 @@ public static class MachineService
                                     }
                                     else
                                     {
-                                        visitedStateDictionary.Add(level7EndState, 7);
+                                        visitedStateDictionary.Add(stringKey, 7);
                                     }
 
                                     // check if possible to go deeper
@@ -344,6 +343,7 @@ public static class MachineService
 
                                         // press button
                                         level8EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                        stringKey = string.Join("", level8EndState);
 
                                         // check answer
                                         if (level8EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -354,12 +354,11 @@ public static class MachineService
                                         }
 
                                         // check if current state has already been achieved
-                                        if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level8EndState)))
+                                        if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                                         {
-                                            if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level8EndState)).Any(x => x.Value > 8))
+                                            if (visitedStateDictionary[stringKey] > 8)
                                             {
-                                                visitedStateDictionary.Remove(level8EndState);
-                                                visitedStateDictionary.Add(level8EndState, 8);
+                                                visitedStateDictionary[stringKey] = 8;
                                             }
                                             else
                                             {
@@ -368,7 +367,7 @@ public static class MachineService
                                         }
                                         else
                                         {
-                                            visitedStateDictionary.Add(level8EndState, 8);
+                                            visitedStateDictionary.Add(stringKey, 8);
                                         }
 
                                         // check if possible to go deeper
@@ -389,6 +388,7 @@ public static class MachineService
 
                                             // press button
                                             level9EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                            stringKey = string.Join("", level9EndState);
 
                                             // check answer
                                             if (level9EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -399,12 +399,11 @@ public static class MachineService
                                             }
 
                                             // check if current state has already been achieved
-                                            if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level9EndState)))
+                                            if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                                             {
-                                                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level9EndState)).Any(x => x.Value > 9))
+                                                if (visitedStateDictionary[stringKey] > 9)
                                                 {
-                                                    visitedStateDictionary.Remove(level9EndState);
-                                                    visitedStateDictionary.Add(level9EndState, 9);
+                                                    visitedStateDictionary[stringKey] = 9;
                                                 }
                                                 else
                                                 {
@@ -413,7 +412,7 @@ public static class MachineService
                                             }
                                             else
                                             {
-                                                visitedStateDictionary.Add(level9EndState, 9);
+                                                visitedStateDictionary.Add(stringKey, 9);
                                             }
 
                                             // check if possible to go deeper
@@ -434,6 +433,7 @@ public static class MachineService
 
                                                 // press button
                                                 level10EndState.PressButton(machine.ButtonWiringSchematics[k]);
+                                                stringKey = string.Join("", level10EndState);
 
                                                 // check answer
                                                 if (level10EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -444,12 +444,11 @@ public static class MachineService
                                                 }
 
                                                 // check if current state has already been achieved
-                                                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level10EndState)))
+                                                if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
                                                 {
-                                                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level10EndState)).Any(x => x.Value > 10))
+                                                    if (visitedStateDictionary[stringKey] > 10)
                                                     {
-                                                        visitedStateDictionary.Remove(level10EndState);
-                                                        visitedStateDictionary.Add(level10EndState, 10);
+                                                        visitedStateDictionary[stringKey] = 10;
                                                     }
                                                     else
                                                     {
@@ -458,7 +457,7 @@ public static class MachineService
                                                 }
                                                 else
                                                 {
-                                                    visitedStateDictionary.Add(level10EndState, 10);
+                                                    visitedStateDictionary.Add(stringKey, 10);
                                                 }
 
                                                 // check if possible to go deeper
@@ -525,5 +524,10 @@ public static class MachineService
         }
 
         return startState;
+    }
+
+    private static string ConvertToStringKey(List<bool> lights)
+    {
+        return string.Join("", lights);
     }
 }
