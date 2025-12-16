@@ -75,7 +75,7 @@ public class Day10Tests
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0ul;
+        var expectedResult = 33ul;
         var fileName = "Example.txt";
         var input = File.ReadAllLines($"Day10\\{fileName}");
         var machines = InputReader.GetMachines(input);

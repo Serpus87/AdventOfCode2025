@@ -23,6 +23,7 @@ public static class Day10
         // secondTry: 527 -- correct!
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
+        machines = InputReader.GetMachines(input);
         var solutionPart2 = Part2.Solve(machines);
 
         // firstTry:

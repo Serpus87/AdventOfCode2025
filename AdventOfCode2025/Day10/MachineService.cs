@@ -503,7 +503,7 @@ public static class MachineService
 
     public static ulong GetFewestButtonPressesWithRecursion(Machine machine)
     {
-        var fewestButtonPresses = 0ul;
+        var fewestButtonPresses = ulong.MaxValue;
         var numberOfButtonPressesNecessary = new List<ulong>();
 
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
@@ -570,7 +570,12 @@ public static class MachineService
             numberOfButtonPressesNecessary.Add(GetFewestButtonPresses(machine, levelEndState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, recursionCounter));
         }
 
-        return numberOfButtonPressesNecessary.Min();
+        if (numberOfButtonPressesNecessary.Count > 0)
+        {
+            fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+        }
+
+        return fewestButtonPresses;
     }
 
     private static void PrintStateForDebug(List<bool> startState)
