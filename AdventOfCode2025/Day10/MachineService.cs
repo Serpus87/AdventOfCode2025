@@ -59,11 +59,11 @@ public static class MachineService
                 visitedStateDictionary.Add(stringKey, 1);
             }
 
-            //// check if possible to go deeper
-            //if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
-            //{
-            //    continue;
-            //}
+            // check if possible to go deeper
+            if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
+            {
+                continue;
+            }
 
             for (var j = 0; j < numberOfButtons; j++)
             {
@@ -105,11 +105,11 @@ public static class MachineService
                     visitedStateDictionary.Add(stringKey, 2);
                 }
 
-                //// check if possible to go deeper
-                //if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
-                //{
-                //    continue;
-                //}
+                // check if possible to go deeper
+                if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
+                {
+                    continue;
+                }
 
                 for (var k = 0; k < numberOfButtons; k++)
                 {
@@ -151,11 +151,11 @@ public static class MachineService
                         visitedStateDictionary.Add(stringKey, 3);
                     }
 
-                    //// check if possible to go deeper
-                    //if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
-                    //{
-                    //    continue;
-                    //}
+                    // check if possible to go deeper
+                    if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
+                    {
+                        continue;
+                    }
 
                     for (var l = 0; l < numberOfButtons; l++)
                     {
@@ -197,11 +197,11 @@ public static class MachineService
                             visitedStateDictionary.Add(stringKey, 4);
                         }
 
-                        //// check if possible to go deeper
-                        //if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
-                        //{
-                        //    continue;
-                        //}
+                        // check if possible to go deeper
+                        if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
+                        {
+                            continue;
+                        }
 
                         for (var m = 0; m < numberOfButtons; m++)
                         {
@@ -243,11 +243,11 @@ public static class MachineService
                                 visitedStateDictionary.Add(stringKey, 5);
                             }
 
-                            //// check if possible to go deeper
-                            //if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
-                            //{
-                            //    continue;
-                            //}
+                            // check if possible to go deeper
+                            if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
+                            {
+                                continue;
+                            }
 
                             for (var n = 0; n < numberOfButtons; n++)
                             {
@@ -289,11 +289,11 @@ public static class MachineService
                                     visitedStateDictionary.Add(stringKey, 6);
                                 }
 
-                                //// check if possible to go deeper
-                                //if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
-                                //{
-                                //    continue;
-                                //}
+                                // check if possible to go deeper
+                                if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
+                                {
+                                    continue;
+                                }
 
                                 for (var o = 0; o < numberOfButtons; o++)
                                 {
@@ -335,11 +335,11 @@ public static class MachineService
                                         visitedStateDictionary.Add(stringKey, 7);
                                     }
 
-                                    //// check if possible to go deeper
-                                    //if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
-                                    //{
-                                    //    continue;
-                                    //}
+                                    // check if possible to go deeper
+                                    if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
+                                    {
+                                        continue;
+                                    }
 
                                     for (var p = 0; p < numberOfButtons; p++)
                                     {
@@ -381,11 +381,11 @@ public static class MachineService
                                             visitedStateDictionary.Add(stringKey, 8);
                                         }
 
-                                        //// check if possible to go deeper
-                                        //if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
-                                        //{
-                                        //    continue;
-                                        //}
+                                        // check if possible to go deeper
+                                        if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
+                                        {
+                                            continue;
+                                        }
 
                                         for (var q = 0; q < numberOfButtons; q++)
                                         {
@@ -427,11 +427,11 @@ public static class MachineService
                                                 visitedStateDictionary.Add(stringKey, 9);
                                             }
 
-                                            //// check if possible to go deeper
-                                            //if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
-                                            //{
-                                            //    continue;
-                                            //}
+                                            // check if possible to go deeper
+                                            if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
+                                            {
+                                                continue;
+                                            }
 
                                             for (var r = 0; r < numberOfButtons; r++)
                                             {
@@ -473,13 +473,13 @@ public static class MachineService
                                                     visitedStateDictionary.Add(stringKey, 10);
                                                 }
 
-                                                //// check if possible to go deeper
-                                                //if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
-                                                //{
-                                                //    continue;
-                                                //}
-                                                var temp = true;
-                                                //throw new ArgumentException("need to go deeper?!?!");
+                                                // check if possible to go deeper
+                                                if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
+                                                {
+                                                    continue;
+                                                }
+                             
+                                                throw new ArgumentException("need to go deeper?!?!");
                                             }
                                         }
                                     }
