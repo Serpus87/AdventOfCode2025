@@ -16,7 +16,9 @@ public static class MachineService
 
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
         var startState = machine.IndicatorLightDiagram.CreateStartState();
-        var visitedStates = new List<List<bool>> { startState };
+        var visitedStates = new List<List<bool>> { startState }; // should be dicitonary of list<bool>, number of button presses
+        var visitedStateDictionary = new Dictionary<List<bool>, uint>();
+        visitedStateDictionary.Add(startState, 0);
 
 
         for (var i = 0; i< numberOfButtons; i++) 
@@ -32,17 +34,27 @@ public static class MachineService
             {
                 numberOfButtonPressesNecessary.Add(1);
                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                continue; // found it! but maybe break?
+                break; // but maybe continue?
             }
 
             // check if current state has already been achieved
-            if (visitedStates.Any(x=>x.SequenceEqual(level1EndState)))
+            if (visitedStateDictionary.Any(x=>x.Key.SequenceEqual(level1EndState)))
             {
-                continue; // maybe break?
+               
+                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level1EndState)).Any(x=>x.Value > 1))
+                {
+                    visitedStateDictionary.Remove(level1EndState);
+                    visitedStateDictionary.Add(level1EndState, 1);
+                }
+                else
+                {
+                    continue; // maybe break?
+                }
             }
-
-            // add to visitedStates
-            visitedStates.Add(level1EndState);
+            else 
+            {
+                visitedStateDictionary.Add(level1EndState, 1);
+            }
 
             // check if possible to go deeper
             if (machine.IndicatorLightDiagram.Count < 2 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 2))
@@ -68,17 +80,26 @@ public static class MachineService
                 {
                     numberOfButtonPressesNecessary.Add(2);
                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                    continue; // found it! but maybe break?
+                    break; // but maybe continue?
                 }
 
                 // check if current state has already been achieved
-                if (visitedStates.Any(x=>x.SequenceEqual(level2EndState)))
+                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level2EndState)))
                 {
-                    continue; // maybe break?
+                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level2EndState)).Any(x => x.Value > 2))
+                    {
+                        visitedStateDictionary.Remove(level2EndState);
+                        visitedStateDictionary.Add(level2EndState, 2);
+                    }
+                    else
+                    {
+                        continue; // maybe break?
+                    }
                 }
-
-                // add to visitedStates
-                visitedStates.Add(level2EndState);
+                else
+                {
+                    visitedStateDictionary.Add(level2EndState, 2);
+                }
 
                 // check if possible to go deeper
                 if (machine.IndicatorLightDiagram.Count < 3 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 3))
@@ -104,17 +125,26 @@ public static class MachineService
                     {
                         numberOfButtonPressesNecessary.Add(3);
                         fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                        continue; // found it! but maybe break?
+                        break; // but maybe continue?
                     }
 
                     // check if current state has already been achieved
-                    if (visitedStates.Any(x=>x.SequenceEqual(level3EndState)))
+                    if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level3EndState)))
                     {
-                        continue; // maybe break?
+                        if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level3EndState)).Any(x => x.Value > 3))
+                        {
+                            visitedStateDictionary.Remove(level3EndState);
+                            visitedStateDictionary.Add(level3EndState, 3);
+                        }
+                        else
+                        {
+                            continue; // maybe break?
+                        }
                     }
-
-                    // add to visitedStates
-                    visitedStates.Add(level3EndState);
+                    else
+                    {
+                        visitedStateDictionary.Add(level3EndState, 3);
+                    }
 
                     // check if possible to go deeper
                     if (machine.IndicatorLightDiagram.Count < 4 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 4))
@@ -140,17 +170,26 @@ public static class MachineService
                         {
                             numberOfButtonPressesNecessary.Add(4);
                             fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                            continue; // found it! but maybe break?
+                            break; // but maybe continue?
                         }
 
                         // check if current state has already been achieved
-                        if (visitedStates.Any(x=>x.SequenceEqual(level4EndState)))
+                        if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level4EndState)))
                         {
-                            continue; // maybe break?
+                            if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level4EndState)).Any(x => x.Value > 4))
+                            {
+                                visitedStateDictionary.Remove(level4EndState);
+                                visitedStateDictionary.Add(level4EndState, 4);
+                            }
+                            else
+                            {
+                                continue; // maybe break?
+                            }
                         }
-
-                        // add to visitedStates
-                        visitedStates.Add(level4EndState);
+                        else
+                        {
+                            visitedStateDictionary.Add(level4EndState, 4);
+                        }
 
                         // check if possible to go deeper
                         if (machine.IndicatorLightDiagram.Count < 5 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 5))
@@ -176,17 +215,26 @@ public static class MachineService
                             {
                                 numberOfButtonPressesNecessary.Add(5);
                                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                continue; // found it! but maybe break?
+                                break; // but maybe continue?
                             }
 
                             // check if current state has already been achieved
-                            if (visitedStates.Any(x=>x.SequenceEqual(level5EndState)))
+                            if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level5EndState)))
                             {
-                                continue; // maybe break?
+                                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level5EndState)).Any(x => x.Value > 5))
+                                {
+                                    visitedStateDictionary.Remove(level5EndState);
+                                    visitedStateDictionary.Add(level5EndState, 5);
+                                }
+                                else
+                                {
+                                    continue; // maybe break?
+                                }
                             }
-
-                            // add to visitedStates
-                            visitedStates.Add(level5EndState);
+                            else
+                            {
+                                visitedStateDictionary.Add(level5EndState, 5);
+                            }
 
                             // check if possible to go deeper
                             if (machine.IndicatorLightDiagram.Count < 6 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 6))
@@ -212,17 +260,26 @@ public static class MachineService
                                 {
                                     numberOfButtonPressesNecessary.Add(6);
                                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                    continue; // found it! but maybe break?
+                                    break; // but maybe continue?
                                 }
 
                                 // check if current state has already been achieved
-                                if (visitedStates.Any(x=>x.SequenceEqual(level6EndState)))
+                                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level6EndState)))
                                 {
-                                    continue; // maybe break?
+                                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level6EndState)).Any(x => x.Value > 6))
+                                    {
+                                        visitedStateDictionary.Remove(level6EndState);
+                                        visitedStateDictionary.Add(level6EndState, 6);
+                                    }
+                                    else
+                                    {
+                                        continue; // maybe break?
+                                    }
                                 }
-
-                                // add to visitedStates
-                                visitedStates.Add(level6EndState);
+                                else
+                                {
+                                    visitedStateDictionary.Add(level6EndState, 6);
+                                }
 
                                 // check if possible to go deeper
                                 if (machine.IndicatorLightDiagram.Count < 7 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 7))
@@ -248,17 +305,26 @@ public static class MachineService
                                     {
                                         numberOfButtonPressesNecessary.Add(7);
                                         fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                        continue; // found it! but maybe break?
+                                        break; // but maybe continue?
                                     }
 
                                     // check if current state has already been achieved
-                                    if (visitedStates.Any(x=>x.SequenceEqual(level7EndState)))
+                                    if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level7EndState)))
                                     {
-                                        continue; // maybe break?
+                                        if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level7EndState)).Any(x => x.Value > 7))
+                                        {
+                                            visitedStateDictionary.Remove(level7EndState);
+                                            visitedStateDictionary.Add(level7EndState, 7);
+                                        }
+                                        else
+                                        {
+                                            continue; // maybe break?
+                                        }
                                     }
-
-                                    // add to visitedStates
-                                    visitedStates.Add(level7EndState);
+                                    else
+                                    {
+                                        visitedStateDictionary.Add(level7EndState, 7);
+                                    }
 
                                     // check if possible to go deeper
                                     if (machine.IndicatorLightDiagram.Count < 8 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 8))
@@ -284,17 +350,26 @@ public static class MachineService
                                         {
                                             numberOfButtonPressesNecessary.Add(8);
                                             fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                            continue; // found it! but maybe break?
+                                            break; // but maybe continue?
                                         }
 
                                         // check if current state has already been achieved
-                                        if (visitedStates.Any(x=>x.SequenceEqual(level8EndState)))
+                                        if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level8EndState)))
                                         {
-                                            continue; // maybe break?
+                                            if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level8EndState)).Any(x => x.Value > 8))
+                                            {
+                                                visitedStateDictionary.Remove(level8EndState);
+                                                visitedStateDictionary.Add(level8EndState, 8);
+                                            }
+                                            else
+                                            {
+                                                continue; // maybe break?
+                                            }
                                         }
-
-                                        // add to visitedStates
-                                        visitedStates.Add(level8EndState);
+                                        else
+                                        {
+                                            visitedStateDictionary.Add(level8EndState, 8);
+                                        }
 
                                         // check if possible to go deeper
                                         if (machine.IndicatorLightDiagram.Count < 9 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 9))
@@ -320,17 +395,26 @@ public static class MachineService
                                             {
                                                 numberOfButtonPressesNecessary.Add(9);
                                                 fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                                continue; // found it! but maybe break?
+                                                break; // but maybe continue?
                                             }
 
                                             // check if current state has already been achieved
-                                            if (visitedStates.Any(x=>x.SequenceEqual(level9EndState)))
+                                            if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level9EndState)))
                                             {
-                                                continue; // maybe break?
+                                                if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level9EndState)).Any(x => x.Value > 9))
+                                                {
+                                                    visitedStateDictionary.Remove(level9EndState);
+                                                    visitedStateDictionary.Add(level9EndState, 9);
+                                                }
+                                                else
+                                                {
+                                                    continue; // maybe break?
+                                                }
                                             }
-
-                                            // add to visitedStates
-                                            visitedStates.Add(level9EndState);
+                                            else
+                                            {
+                                                visitedStateDictionary.Add(level9EndState, 9);
+                                            }
 
                                             // check if possible to go deeper
                                             if (machine.IndicatorLightDiagram.Count < 10 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 10))
@@ -356,17 +440,26 @@ public static class MachineService
                                                 {
                                                     numberOfButtonPressesNecessary.Add(10);
                                                     fewestButtonPresses = numberOfButtonPressesNecessary.Min();
-                                                    continue; // found it! but maybe break?
+                                                    break; // but maybe continue?
                                                 }
 
                                                 // check if current state has already been achieved
-                                                if (visitedStates.Any(x=>x.SequenceEqual(level10EndState)))
+                                                if (visitedStateDictionary.Any(x => x.Key.SequenceEqual(level10EndState)))
                                                 {
-                                                    continue; // maybe break?
+                                                    if (visitedStateDictionary.Where(x=>x.Key.SequenceEqual(level10EndState)).Any(x => x.Value > 10))
+                                                    {
+                                                        visitedStateDictionary.Remove(level10EndState);
+                                                        visitedStateDictionary.Add(level10EndState, 10);
+                                                    }
+                                                    else
+                                                    {
+                                                        continue; // maybe break?
+                                                    }
                                                 }
-
-                                                // add to visitedStates
-                                                visitedStates.Add(level10EndState);
+                                                else
+                                                {
+                                                    visitedStateDictionary.Add(level10EndState, 10);
+                                                }
 
                                                 // check if possible to go deeper
                                                 if (machine.IndicatorLightDiagram.Count < 11 || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < 11))
