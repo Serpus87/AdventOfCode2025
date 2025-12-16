@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -478,7 +479,7 @@ public static class MachineService
                                                 {
                                                     continue;
                                                 }
-                             
+
                                                 throw new ArgumentException("need to go deeper?!?!");
                                             }
                                         }
@@ -497,6 +498,79 @@ public static class MachineService
         }
 
         return fewestButtonPresses;
+    }
+
+
+    public static ulong GetFewestButtonPressesWithRecursion(Machine machine)
+    {
+        var fewestButtonPresses = 0ul;
+        var numberOfButtonPressesNecessary = new List<ulong>();
+
+        var numberOfButtons = machine.ButtonWiringSchematics.Count;
+        var startState = machine.IndicatorLightDiagram.CreateStartState();
+        var stringKey = string.Join("", startState);
+        var visitedStateDictionary = new Dictionary<string, uint>
+        {
+            { stringKey, 0 }
+        };
+
+        fewestButtonPresses = GetFewestButtonPresses(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, 0u);
+
+        return fewestButtonPresses;
+
+        //PrintStateForDebug(startState);
+
+        
+    }
+
+    private static ulong GetFewestButtonPresses(Machine machine, List<bool> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, Dictionary<string,uint> visitedStateDictionary, uint recursionCounter)
+    {
+        recursionCounter++;
+        var numberOfButtons = machine.ButtonWiringSchematics.Count;
+
+        for (var i = 0; i < numberOfButtons; i++)
+        {
+            var levelStartState = startState.Clone();
+            var levelEndState = levelStartState.Clone();
+
+            // press button
+            levelEndState.PressButton(machine.ButtonWiringSchematics[i]);
+            var stringKey = string.Join("", levelEndState);
+            //PrintStateForDebug(level1EndState);
+
+            // check answer
+            if (levelEndState.SequenceEqual(machine.IndicatorLightDiagram))
+            {
+                return recursionCounter;
+            }
+
+            // check if current state has already been achieved
+            if (visitedStateDictionary.Any(x => x.Key.Equals(stringKey)))
+            {
+                if (visitedStateDictionary[stringKey] > recursionCounter)
+                {
+                    visitedStateDictionary[stringKey] = recursionCounter;
+                }
+                else
+                {
+                    continue; // maybe break?
+                }
+            }
+            else
+            {
+                visitedStateDictionary.Add(stringKey, recursionCounter);
+            }
+
+            // check if possible to go deeper
+            if (machine.IndicatorLightDiagram.Count < (recursionCounter + 1) || (numberOfButtonPressesNecessary.Count > 0 && fewestButtonPresses < (recursionCounter + 1)))
+            {
+                continue;
+            }
+
+            numberOfButtonPressesNecessary.Add(GetFewestButtonPresses(machine, levelEndState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, recursionCounter));
+        }
+
+        return numberOfButtonPressesNecessary.Min();
     }
 
     private static void PrintStateForDebug(List<bool> startState)
@@ -555,10 +629,5 @@ public static class MachineService
         }
 
         return startState;
-    }
-
-    private static string ConvertToStringKey(List<bool> lights)
-    {
-        return string.Join("", lights);
     }
 }

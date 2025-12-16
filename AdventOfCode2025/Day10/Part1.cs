@@ -18,6 +18,7 @@ public static class Part1
         foreach (var machine in machines)
         {
             var fewestButtonPresses = MachineService.GetFewestButtonPressesWithTooManyForLoops(machine);
+            //var fewestButtonPresses = MachineService.GetFewestButtonPressesWithRecursion(machine); // todo make this work
             result += fewestButtonPresses;
             counter++;
             Console.WriteLine($"{counter} out of {machines.Count} fewest button presses found!");
