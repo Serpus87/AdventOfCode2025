@@ -17,9 +17,10 @@ public static class MachineService
         var numberOfButtons = machine.ButtonWiringSchematics.Count;
         var startState = machine.IndicatorLightDiagram.CreateStartState();
         var stringKey = string.Join("", startState);
-        var visitedStateDictionary = new Dictionary<string, uint>();
-        visitedStateDictionary.Add(stringKey, 0);
-
+        var visitedStateDictionary = new Dictionary<string, uint>
+        {
+            { stringKey, 0 }
+        };
 
         for (var i = 0; i< numberOfButtons; i++) 
         {
