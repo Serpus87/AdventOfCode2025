@@ -22,7 +22,7 @@ public static class MachineService
             { stringKey, 0 }
         };
 
-        PrintStateForDebug(startState);
+        //PrintStateForDebug(startState);
 
         for (var i = 0; i < numberOfButtons; i++)
         {
@@ -32,7 +32,7 @@ public static class MachineService
             // press button
             level1EndState.PressButton(machine.ButtonWiringSchematics[i]);
             stringKey = string.Join("", level1EndState);
-            PrintStateForDebug(level1EndState);
+            //PrintStateForDebug(level1EndState);
 
             // check answer
             if (level1EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -78,7 +78,7 @@ public static class MachineService
                 // press button
                 level2EndState.PressButton(machine.ButtonWiringSchematics[j]);
                 stringKey = string.Join("", level2EndState);
-                PrintStateForDebug(level2EndState);
+                //PrintStateForDebug(level2EndState);
 
                 // check answer
                 if (level2EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -124,7 +124,7 @@ public static class MachineService
                     // press button
                     level3EndState.PressButton(machine.ButtonWiringSchematics[k]);
                     stringKey = string.Join("", level3EndState);
-                    PrintStateForDebug(level3EndState);
+                    //PrintStateForDebug(level3EndState);
 
                     // check answer
                     if (level3EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -170,7 +170,7 @@ public static class MachineService
                         // press button
                         level4EndState.PressButton(machine.ButtonWiringSchematics[l]);
                         stringKey = string.Join("", level4EndState);
-                        PrintStateForDebug(level4EndState);
+                        //PrintStateForDebug(level4EndState);
 
                         // check answer
                         if (level4EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -216,7 +216,7 @@ public static class MachineService
                             // press button
                             level5EndState.PressButton(machine.ButtonWiringSchematics[m]);
                             stringKey = string.Join("", level5EndState);
-                            PrintStateForDebug(level5EndState);
+                            //PrintStateForDebug(level5EndState);
 
                             // check answer
                             if (level5EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -262,7 +262,7 @@ public static class MachineService
                                 // press button
                                 level6EndState.PressButton(machine.ButtonWiringSchematics[n]);
                                 stringKey = string.Join("", level6EndState);
-                                PrintStateForDebug(level6EndState);
+                                //PrintStateForDebug(level6EndState);
 
                                 // check answer
                                 if (level6EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -308,7 +308,7 @@ public static class MachineService
                                     // press button
                                     level7EndState.PressButton(machine.ButtonWiringSchematics[o]);
                                     stringKey = string.Join("", level7EndState);
-                                    PrintStateForDebug(level7EndState);
+                                    //PrintStateForDebug(level7EndState);
 
                                     // check answer
                                     if (level7EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -354,7 +354,7 @@ public static class MachineService
                                         // press button
                                         level8EndState.PressButton(machine.ButtonWiringSchematics[p]);
                                         stringKey = string.Join("", level8EndState);
-                                        PrintStateForDebug(level8EndState);
+                                        //PrintStateForDebug(level8EndState);
 
                                         // check answer
                                         if (level8EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -400,7 +400,7 @@ public static class MachineService
                                             // press button
                                             level9EndState.PressButton(machine.ButtonWiringSchematics[q]);
                                             stringKey = string.Join("", level9EndState);
-                                            PrintStateForDebug(level9EndState);
+                                            //PrintStateForDebug(level9EndState);
 
                                             // check answer
                                             if (level9EndState.SequenceEqual(machine.IndicatorLightDiagram))
@@ -446,7 +446,7 @@ public static class MachineService
                                                 // press button
                                                 level10EndState.PressButton(machine.ButtonWiringSchematics[r]);
                                                 stringKey = string.Join("", level10EndState);
-                                                PrintStateForDebug(level10EndState);
+                                                //PrintStateForDebug(level10EndState);
 
                                                 // check answer
                                                 if (level10EndState.SequenceEqual(machine.IndicatorLightDiagram))
