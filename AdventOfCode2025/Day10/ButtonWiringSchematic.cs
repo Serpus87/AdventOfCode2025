@@ -8,9 +8,9 @@ namespace AdventOfCode2025.Day10;
 
 public class ButtonWiringSchematic
 {
-    public List<uint> ButtonWirings { get; set; }
+    public List<int> ButtonWirings { get; set; }
 
-    public ButtonWiringSchematic(List<uint> buttonWirings)
+    public ButtonWiringSchematic(List<int> buttonWirings)
     {
         ButtonWirings = buttonWirings;    
     }

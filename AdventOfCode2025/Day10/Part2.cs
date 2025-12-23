@@ -18,7 +18,7 @@ public static class Part2
         foreach (var machine in machines)
         {
            
-            var fewestButtonPresses = MachineService.GetFewestButtonPressesForJoltageRequirements(machine); 
+            var fewestButtonPresses = MachineService.GetFewestButtonPressesForJoltageRequirementsV2(machine); 
             result += fewestButtonPresses;
             counter++;
             Console.WriteLine($"{counter} out of {machines.Count} fewest button presses found!");

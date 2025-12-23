@@ -72,13 +72,13 @@ public static class InputReader
 
     private static ButtonWiringSchematic GetButtonWiringSchematic(string buttonWiringSchematicString)
     {
-        var buttonWirings = new List<uint>();
+        var buttonWirings = new List<int>();
 
         var cleanStrings = buttonWiringSchematicString.Replace("(", "").Replace(")", "").Split(",");
 
         foreach (var cleanString in cleanStrings)
         {
-            buttonWirings.Add(uint.Parse(cleanString));
+            buttonWirings.Add(int.Parse(cleanString));
         }
 
         return new ButtonWiringSchematic(buttonWirings);

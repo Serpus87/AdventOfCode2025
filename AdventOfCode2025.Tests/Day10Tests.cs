@@ -36,14 +36,14 @@ public class Day10Tests
         var indicatorLightDiagram = new List<bool> { true, true, true, false, false, true };
         var buttonWiringSchematics = new List<ButtonWiringSchematic>
         {
-            new ButtonWiringSchematic(new List<uint>{0u,2u,5u}),
-            new ButtonWiringSchematic(new List<uint>{0u,2u,3u,4u,5u}),
-            new ButtonWiringSchematic(new List<uint>{1u,2u}),
-            new ButtonWiringSchematic(new List<uint>{0u,1u,5u}),
-            new ButtonWiringSchematic(new List<uint>{0u,2u,3u,4u}),
-            new ButtonWiringSchematic(new List<uint>{3u}),
-            new ButtonWiringSchematic(new List<uint>{2u,3u,5u}),
-            new ButtonWiringSchematic(new List<uint>{1u,5u})
+            new ButtonWiringSchematic(new List<int>{0,2,5}),
+            new ButtonWiringSchematic(new List<int>{0,2,3,4,5}),
+            new ButtonWiringSchematic(new List<int>{1,2}),
+            new ButtonWiringSchematic(new List<int>{0,1,5}),
+            new ButtonWiringSchematic(new List<int>{0,2,3,4}),
+            new ButtonWiringSchematic(new List<int>{3}),
+            new ButtonWiringSchematic(new List<int>{2,3,5}),
+            new ButtonWiringSchematic(new List<int>{1,5})
         };
 
         var machine = new Machine(indicatorLightDiagram, buttonWiringSchematics, new List<uint>());
@@ -69,6 +69,24 @@ public class Day10Tests
 
         // Assert
         Assert.AreEqual(expectedResult, result);
+    }
+
+    [DataRow(2u,2,3)]
+    [DataRow(3u,2,4)]
+    [DataRow(2u,3,6)]
+    [DataRow(3u,3,10)]
+    [DataRow(1u,10,10)]
+    [TestMethod]
+    public void GetButtonPressCombinations_Input_ReturnsExpectedResult(uint joltageRequirement, int numberOfButtons, int expectedCount)
+    {
+        // Arrange
+    
+        // Act
+        var result = MachineService.GetButtonPressCombinationsWithTooManyForLoops(joltageRequirement, numberOfButtons);
+
+        // Assert
+        Assert.IsTrue(result.Count == expectedCount);
+        Assert.IsTrue(result.All(x=>x.Sum() == (int)joltageRequirement));
     }
 
     [TestMethod]
