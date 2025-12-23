@@ -1213,6 +1213,10 @@ public static class MachineService
             }
             for (var j = 0; j <= joltageRequirement; j++)
             {
+                if (i + j > joltageRequirement)
+                {
+                    break;
+                }
                 if (count == 2)
                 {
                     if (i + j == joltageRequirement)
@@ -1224,6 +1228,10 @@ public static class MachineService
                 }
                 for (var k = 0; k <= joltageRequirement; k++)
                 {
+                    if (i + j + k > joltageRequirement)
+                    {
+                        break;
+                    }
                     if (count == 3)
                     {
                         if (i + j + k == joltageRequirement)
@@ -1235,6 +1243,10 @@ public static class MachineService
                     }
                     for (var l = 0; l <= joltageRequirement; l++)
                     {
+                        if (i + j + k + l > joltageRequirement)
+                        {
+                            break;
+                        }
                         if (count == 4)
                         {
                             if (i + j + k + l == joltageRequirement)
@@ -1246,6 +1258,10 @@ public static class MachineService
                         }
                         for (var m = 0; m <= joltageRequirement; m++)
                         {
+                            if (i + j + k + l + m > joltageRequirement)
+                            {
+                                break;
+                            }
                             if (count == 5)
                             {
                                 if (i + j + k + l + m == joltageRequirement)
@@ -1257,6 +1273,10 @@ public static class MachineService
                             }
                             for (var n = 0; n <= joltageRequirement; n++)
                             {
+                                if (i + j + k + l + m + n > joltageRequirement)
+                                {
+                                    break;
+                                }
                                 if (count == 6)
                                 {
                                     if (i + j + k + l + m + n == joltageRequirement)
@@ -1268,6 +1288,10 @@ public static class MachineService
                                 }
                                 for (var o = 0; o <= joltageRequirement; o++)
                                 {
+                                    if (i + j + k + l + m + n + o > joltageRequirement)
+                                    {
+                                        break;
+                                    }
                                     if (count == 7)
                                     {
                                         if (i + j + k + l + m + n + o == joltageRequirement)
@@ -1279,6 +1303,10 @@ public static class MachineService
                                     }
                                     for (var p = 0; p <= joltageRequirement; p++)
                                     {
+                                        if (i + j + k + l + m + n + o + p > joltageRequirement)
+                                        {
+                                            break;
+                                        }
                                         if (count == 8)
                                         {
                                             if (i + j + k + l + m + n + o + p == joltageRequirement)
@@ -1290,6 +1318,10 @@ public static class MachineService
                                         }
                                         for (var q = 0; q <= joltageRequirement; q++)
                                         {
+                                            if (i + j + k + l + m + n + o + p + q > joltageRequirement)
+                                            {
+                                                break;
+                                            }
                                             if (count == 9)
                                             {
                                                 if (i + j + k + l + m + n + o + p + q == joltageRequirement)
@@ -1301,6 +1333,10 @@ public static class MachineService
                                             }
                                             for (var r = 0; r <= joltageRequirement; r++)
                                             {
+                                                if (i + j + k + l + m + n + o + p + q + r > joltageRequirement)
+                                                {
+                                                    break;
+                                                }
                                                 if (count == 10)
                                                 {
                                                     if (i + j + k + l + m + n + o + p + q + r == joltageRequirement)
