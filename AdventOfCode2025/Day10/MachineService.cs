@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AdventOfCode2025.Day10;
@@ -558,9 +559,12 @@ public static class MachineService
             { stringKey, 0 }
         };
 
+        var visitedStringKeys = new List<string> { stringKey };
+
         //Console.WriteLine(stringKey);
         //fewestButtonPresses = GetMachineFewestButtonPressesV2(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, visitedStateDictionary, 0u);
-        fewestButtonPresses = GetMachineFewestButtonPressesV3(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, 0u, 0);
+        //fewestButtonPresses = GetMachineFewestButtonPressesV3(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, 0u, 0);
+        fewestButtonPresses = GetMachineFewestButtonPressesWithoutRecursion(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, 0u);
 
         return fewestButtonPresses;
     }
@@ -775,7 +779,7 @@ public static class MachineService
     private static ulong GetMachineFewestButtonPressesV3(Machine machine, List<uint> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, uint numberOfButtonsPressed, int i)
     {
         var levelStartState = startState.Clone();
-        
+
         var joltageRequirement = machine.JoltageRequirements[i] - startState[i];
         var relevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(i)).ToList();
         var buttonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(joltageRequirement, relevantButtons.Count);
@@ -789,7 +793,7 @@ public static class MachineService
                 levelEndState.PressButton(relevantButtons[j], buttonPressCombination[j]);
             }
 
-            Console.WriteLine(string.Join(",", levelEndState));
+            //Console.WriteLine(string.Join(",", levelEndState));
 
             // check answer
             if (levelEndState.SequenceEqual(machine.JoltageRequirements))
@@ -798,12 +802,12 @@ public static class MachineService
             }
 
             // check if surpassed joltage reqs OR recursion is impossible
-            if (AreAnyJoltageRequirementsTooBig(levelEndState, machine.JoltageRequirements) || i + 1 == machine.JoltageRequirements.Count)
+            if (AreAnyJoltageRequirementsTooBig(levelEndState, machine.JoltageRequirements) || i == machine.JoltageRequirements.Count - 1)
             {
                 continue;
             }
 
-            // recurse
+            // recurse forward
             var nextI = i + 1;
             var nextJoltageRequirementToMeet = machine.JoltageRequirements[nextI] - levelEndState[nextI];
             var nextRelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(nextI)).ToList();
@@ -813,10 +817,178 @@ public static class MachineService
         if (numberOfButtonPressesNecessary.Count > 0)
         {
             fewestButtonPresses = numberOfButtonPressesNecessary.Min();
+            return fewestButtonPresses;
+        }
+
+        // recurse backward
+        var previousI = i - 1;
+        return GetMachineFewestButtonPressesV3(machine, startState, numberOfButtonPressesNecessary, fewestButtonPresses, numberOfButtonsPressed, previousI);
+    }
+
+    private static ulong GetMachineFewestButtonPressesWithoutRecursion(Machine machine, List<uint> startState, List<ulong> numberOfButtonPressesNecessary, ulong fewestButtonPresses, uint numberOfButtonsPressed)
+    {
+        var level1NumberOfButtonsPressed = numberOfButtonsPressed;
+        var level1StartState = startState.Clone();
+        var level1JoltageRequirement = machine.JoltageRequirements[0] - startState[0];
+        var level1RelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(0)).ToList();
+        var level1ButtonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(level1JoltageRequirement, level1RelevantButtons.Count);
+
+        foreach (var level1ButtonPressCombination in level1ButtonPressCombinations)
+        {
+            var level1EndState = level1StartState.Clone();
+
+            for (int relevantButtonsCounter = 0; relevantButtonsCounter < level1RelevantButtons.Count; relevantButtonsCounter++)
+            {
+                level1EndState.PressButton(level1RelevantButtons[relevantButtonsCounter], level1ButtonPressCombination[relevantButtonsCounter]);
+            }
+
+            Console.WriteLine(string.Join(",", level1EndState));
+
+            // check answer
+            if (level1EndState.SequenceEqual(machine.JoltageRequirements))
+            {
+                numberOfButtonPressesNecessary.Add(level1NumberOfButtonsPressed + level1JoltageRequirement);
+            }
+
+            // check if surpassed joltage reqs OR recursion is impossible
+            if (AreAnyJoltageRequirementsTooBig(level1EndState, machine.JoltageRequirements) || 0 == machine.JoltageRequirements.Count - 1)
+            {
+                continue;
+            }
+
+            // go deeper
+            var level2NumberOfButtonsPressed = level1NumberOfButtonsPressed + level1JoltageRequirement;
+            var level2StartState = level1EndState.Clone();
+            var level2JoltageRequirement = machine.JoltageRequirements[1] - level2StartState[1];
+            var level2RelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(1)).ToList();
+            var level2ButtonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(level2JoltageRequirement, level2RelevantButtons.Count);
+
+            foreach (var level2ButtonPressCombination in level2ButtonPressCombinations)
+            {
+                var level2EndState = level2StartState.Clone();
+
+                for (int relevantButtonsCounter = 0; relevantButtonsCounter < level2RelevantButtons.Count; relevantButtonsCounter++)
+                {
+                    level2EndState.PressButton(level2RelevantButtons[relevantButtonsCounter], level2ButtonPressCombination[relevantButtonsCounter]);
+                }
+
+                Console.WriteLine(string.Join(",", level2EndState));
+
+                // check answer
+                if (level2EndState.SequenceEqual(machine.JoltageRequirements))
+                {
+                    numberOfButtonPressesNecessary.Add(level2NumberOfButtonsPressed + level2JoltageRequirement);
+                }
+
+                // check if surpassed joltage reqs OR recursion is impossible
+                if (AreAnyJoltageRequirementsTooBig(level2EndState, machine.JoltageRequirements) || 1 == machine.JoltageRequirements.Count - 1)
+                {
+                    continue;
+                }
+
+                // go deeper
+                var level3NumberOfButtonsPressed = level2NumberOfButtonsPressed + level2JoltageRequirement;
+                var level3StartState = level2EndState.Clone();
+                var level3JoltageRequirement = machine.JoltageRequirements[2] - level3StartState[2];
+                var level3RelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(2)).ToList();
+                var level3ButtonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(level3JoltageRequirement, level3RelevantButtons.Count);
+
+                foreach (var level3ButtonPressCombination in level3ButtonPressCombinations)
+                {
+                    var level3EndState = level3StartState.Clone();
+
+                    for (int relevantButtonsCounter = 0; relevantButtonsCounter < level3RelevantButtons.Count; relevantButtonsCounter++)
+                    {
+                        level3EndState.PressButton(level3RelevantButtons[relevantButtonsCounter], level3ButtonPressCombination[relevantButtonsCounter]);
+                    }
+
+                    Console.WriteLine(string.Join(",", level3EndState));
+
+                    // check answer
+                    if (level3EndState.SequenceEqual(machine.JoltageRequirements))
+                    {
+                        numberOfButtonPressesNecessary.Add(level3NumberOfButtonsPressed + level3JoltageRequirement);
+                    }
+
+                    // check if surpassed joltage reqs OR recursion is impossible
+                    if (AreAnyJoltageRequirementsTooBig(level3EndState, machine.JoltageRequirements) || 2 == machine.JoltageRequirements.Count - 1)
+                    {
+                        continue;
+                    }
+
+                    // go deeper
+                    var level4NumberOfButtonsPressed = level3NumberOfButtonsPressed + level3JoltageRequirement;
+                    var level4StartState = level3EndState.Clone();
+                    var level4JoltageRequirement = machine.JoltageRequirements[3] - level4StartState[3];
+                    var level4RelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(3)).ToList();
+                    var level4ButtonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(level4JoltageRequirement, level4RelevantButtons.Count);
+
+                    foreach (var level4ButtonPressCombination in level4ButtonPressCombinations)
+                    {
+                        var level4EndState = level4StartState.Clone();
+
+                        for (int relevantButtonsCounter = 0; relevantButtonsCounter < level4RelevantButtons.Count; relevantButtonsCounter++)
+                        {
+                            level4EndState.PressButton(level4RelevantButtons[relevantButtonsCounter], level4ButtonPressCombination[relevantButtonsCounter]);
+                        }
+
+                        Console.WriteLine(string.Join(",", level4EndState));
+
+                        // check answer
+                        if (level4EndState.SequenceEqual(machine.JoltageRequirements))
+                        {
+                            numberOfButtonPressesNecessary.Add(level4NumberOfButtonsPressed + level4JoltageRequirement);
+                        }
+
+                        // check if surpassed joltage reqs OR recursion is impossible
+                        if (AreAnyJoltageRequirementsTooBig(level4EndState, machine.JoltageRequirements) || 3 == machine.JoltageRequirements.Count - 1)
+                        {
+                            continue;
+                        }
+
+                        // go deeper
+                        var level5NumberOfButtonsPressed = level4NumberOfButtonsPressed + level4JoltageRequirement;
+                        var level5StartState = level4EndState.Clone();
+                        var level5JoltageRequirement = machine.JoltageRequirements[4] - level5StartState[4];
+                        var level5RelevantButtons = machine.ButtonWiringSchematics.Where(x => x.ButtonWirings.Contains(4)).ToList();
+                        var level5ButtonPressCombinations = GetButtonPressCombinationsWithTooManyForLoops(level5JoltageRequirement, level5RelevantButtons.Count);
+
+                        foreach (var level5ButtonPressCombination in level5ButtonPressCombinations)
+                        {
+                            var level5EndState = level5StartState.Clone();
+
+                            for (int relevantButtonsCounter = 0; relevantButtonsCounter < level5RelevantButtons.Count; relevantButtonsCounter++)
+                            {
+                                level5EndState.PressButton(level5RelevantButtons[relevantButtonsCounter], level5ButtonPressCombination[relevantButtonsCounter]);
+                            }
+
+                            Console.WriteLine(string.Join(",", level5EndState));
+
+                            // check answer
+                            if (level5EndState.SequenceEqual(machine.JoltageRequirements))
+                            {
+                                numberOfButtonPressesNecessary.Add(level5NumberOfButtonsPressed + level5JoltageRequirement);
+                            }
+
+                            // check if surpassed joltage reqs OR recursion is impossible
+                            if (AreAnyJoltageRequirementsTooBig(level5EndState, machine.JoltageRequirements) || 4 == machine.JoltageRequirements.Count - 1)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (numberOfButtonPressesNecessary.Count > 0)
+        {
+            fewestButtonPresses = numberOfButtonPressesNecessary.Min();
         }
 
         return fewestButtonPresses;
     }
+
 
     public static List<List<int>> GetButtonPressCombinations(uint joltageRequirement, int count) // public for testing
     {
