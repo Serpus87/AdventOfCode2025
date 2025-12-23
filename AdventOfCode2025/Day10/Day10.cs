@@ -17,11 +17,11 @@ public static class Day10
 
         //Console.WriteLine(machines.Max(x=>x.IndicatorLightDiagram.Count));
 
-        var solutionPart1 = Part1.Solve(machines);
+        //var solutionPart1 = Part1.Solve(machines);
 
         // firstTry: 268 -- too low
         // secondTry: 527 -- correct!
-        Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
+        //Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
         machines = InputReader.GetMachines(input);
         var solutionPart2 = Part2.Solve(machines);

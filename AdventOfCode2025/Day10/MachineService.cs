@@ -1491,4 +1491,22 @@ public static class MachineService
 
         return startState;
     }
+
+    public static Dictionary<string,List<List<int>>> GetSuperDuperDictionary(uint joltageRequirement, int count)
+    {
+        var superDuperDictionary = new Dictionary<string, List<List<int>>>();
+
+        for (uint i = 0; i <= joltageRequirement; i++)
+        {
+            for (int j = 0; j < count; j++)
+            {
+                var stringKey = string.Join(",", i, j);
+                var combinations = GetButtonPressCombinationsWithTooManyForLoops(i, j);
+
+                superDuperDictionary.Add(stringKey, combinations);
+            }
+        }
+
+        return superDuperDictionary;
+    }
 }
