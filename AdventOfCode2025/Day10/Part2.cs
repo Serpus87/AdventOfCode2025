@@ -13,18 +13,18 @@ public static class Part2
     {
         var result = 0ul;
 
-        var maxJoltageRequirement = machines.SelectMany(x => x.JoltageRequirements).Max();
-        var maxNumberOfButtons = machines.Max(x => x.ButtonWiringSchematics.Count);
+        //var maxJoltageRequirement = machines.SelectMany(x => x.JoltageRequirements).Max();
+        //var maxNumberOfButtons = machines.Max(x => x.ButtonWiringSchematics.Count);
 
-        // debug to get some insights
-        var joltageRequirements = machines.SelectMany(x => x.JoltageRequirements).Distinct().OrderDescending().ToList();
-        var numberOfButtons = machines.Select(x=>x.ButtonWiringSchematics.Count).Distinct().OrderDescending().ToList();
-        var temp = machines.MaxBy(x => x.ButtonWiringSchematics.Count);
-        // debug
+        //// debug to get some insights
+        //var joltageRequirements = machines.SelectMany(x => x.JoltageRequirements).Distinct().OrderDescending().ToList();
+        //var numberOfButtons = machines.Select(x=>x.ButtonWiringSchematics.Count).Distinct().OrderDescending().ToList();
+        //var temp = machines.MaxBy(x => x.ButtonWiringSchematics.Count);
+        //// debug
 
-        //var superDuperDictionary = MachineService.GetSuperDuperDictionary(maxJoltageRequirement, maxNumberOfButtons);
-        //var superDuperDictionary = MachineService.GetSuperDuperDictionary(maxJoltageRequirement, 6);
-        var superDuperDictionary = MachineService.GetSuperDuperDictionary(100, 6);
+        ////var superDuperDictionary = MachineService.GetSuperDuperDictionary(maxJoltageRequirement, maxNumberOfButtons);
+        ////var superDuperDictionary = MachineService.GetSuperDuperDictionary(maxJoltageRequirement, 6);
+        //var superDuperDictionary = MachineService.GetSuperDuperDictionary(100, 6);
 
         var counter = 0;
 
