@@ -22,7 +22,7 @@ public static class Day9
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
         redTiles = TileService.GetRedTiles(input);
-        var solutionPart2 = Part2.Solve(redTiles);
+        var solutionPart2 = Part2.Solve(redTiles); // todo solve
 
         // firstTry: 4601675372 -- too high
         Console.WriteLine($"Day9 Part2 Solution: {solutionPart2}");

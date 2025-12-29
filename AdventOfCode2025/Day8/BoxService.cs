@@ -299,7 +299,7 @@ public static class BoxService
         return Math.Sqrt(distanceA * distanceA + distanceB * distanceB);
     }
 
-    internal static List<Connection> GetNextShortestConnections(List<JunctionBox> junctionBoxes, int minimumNumberOfConnectionsNecessary, List<Connection> shortestConnections)
+    public static List<Connection> GetNextShortestConnections(List<JunctionBox> junctionBoxes, int minimumNumberOfConnectionsNecessary, List<Connection> shortestConnections)
     {
         var nextShortestConnections = new List<Connection>();
 
@@ -330,7 +330,7 @@ public static class BoxService
         return nextShortestConnections;
     }
 
-    internal static List<Circuit> AddShortestConnectionsToCircuits(List<Connection> nextShortestConnections, List<Circuit> circuits)
+    public static List<Circuit> AddShortestConnectionsToCircuits(List<Connection> nextShortestConnections, List<Circuit> circuits)
     {
         foreach (var shortestConnection in nextShortestConnections)
         {
@@ -371,7 +371,7 @@ public static class BoxService
         return circuits;
     }
 
-    internal static List<Connection> GetOrderedConnections(List<JunctionBox> junctionBoxes)
+    public static List<Connection> GetOrderedConnections(List<JunctionBox> junctionBoxes)
     {
         var connections = new List<Connection>();
         for (int i = 1; i <= junctionBoxes.Count; i++)
