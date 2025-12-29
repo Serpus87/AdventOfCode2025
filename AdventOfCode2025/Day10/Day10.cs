@@ -24,7 +24,7 @@ public static class Day10
         Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
 
         machines = InputReader.GetMachines(input);
-        var solutionPart2 = Part2.Solve(machines);
+        var solutionPart2 = Part2.Solve(machines); // todo solve
 
         // firstTry:
         Console.WriteLine($"Day9 Part2 Solution: {solutionPart2}");
