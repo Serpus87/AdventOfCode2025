@@ -9,9 +9,9 @@ namespace AdventOfCode2025.Day11;
 
 public static class Part1
 {
-    public static ulong Solve()
+    public static ulong Solve(List<Device> devices)
     {
-        var result = 0ul;
+        var result = DeviceService.FindPathsFromYouToOut(devices);
 
         return result;
     }

@@ -16,11 +16,10 @@ public class Day11Tests
         // Arrange
         var expectedResult = 5ul;
         var fileName = "Example.txt";
-        //var input = File.ReadAllLines($"Day11\\{fileName}");
-        //var machines = InputReader.GetMachines(input);
+        var devices = InputReader.GetDevices(fileName);
 
         // Act
-        var result = Part1.Solve();
+        var result = Part1.Solve(devices);
 
         // Assert
         Assert.AreEqual(expectedResult, result);
@@ -30,13 +29,12 @@ public class Day11Tests
     public void Part2Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
-        var expectedResult = 0ul;
-        var fileName = "Example.txt";
-        //var input = File.ReadAllLines($"Day11\\{fileName}");
-        //var machines = InputReader.GetMachines(input);
+        var expectedResult = 2ul;
+        var fileName = "Example2.txt";
+        var devices = InputReader.GetDevices(fileName);
 
         // Act
-        var result = Part2.Solve();
+        var result = Part2.Solve(devices);
 
         // Assert
         Assert.AreEqual(expectedResult, result);

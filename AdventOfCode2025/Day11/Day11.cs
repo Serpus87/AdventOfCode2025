@@ -12,19 +12,14 @@ public static class Day11
     {
         // read file
         var fileName = "PuzzleInput.txt";
-        //var input = File.ReadAllLines($"Day10\\{fileName}");
-        //var machines = InputReader.GetMachines(input);
+        var devices = InputReader.GetDevices(fileName);
 
-        //Console.WriteLine(machines.Max(x=>x.IndicatorLightDiagram.Count));
+        var solutionPart1 = Part1.Solve(devices);
 
-        var solutionPart1 = Part1.Solve();
-
-        // firstTry: 268 -- too low
-        // secondTry: 527 -- correct!
+        // firstTry: 431 -- correct!
         Console.WriteLine($"Day11 Part1 Solution: {solutionPart1}");
 
-        //machines = InputReader.GetMachines(input);
-        var solutionPart2 = Part2.Solve(); 
+        var solutionPart2 = Part2.Solve(devices); 
 
         // firstTry:
         Console.WriteLine($"Day11 Part2 Solution: {solutionPart2}");
