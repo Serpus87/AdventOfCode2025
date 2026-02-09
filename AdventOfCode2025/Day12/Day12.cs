@@ -19,7 +19,7 @@ public static class Day12
         // firstTry: 
         Console.WriteLine($"Day11 Part1 Solution: {solutionPart1}");
 
-        var input = InputReader.GetTreesAndPresents(fileName);
+        input = InputReader.GetTreesAndPresents(fileName);
         var solutionPart2 = Part2.Solve(input.Trees, input.Presents); 
 
         // firstTry:

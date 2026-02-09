@@ -22,4 +22,12 @@ public class Present
         NumberOfColumns = numberOfColumns;
         Fields = new PresentField[numberOfRows, numberOfColumns];
     }
+
+    public Present Clone(int allPresentsId)
+    {
+        var clonedPresent = new Present(Id, NumberOfRows, NumberOfColumns);
+        clonedPresent.AllPresentsId = allPresentsId;
+
+        return clonedPresent;
+    }
 }
