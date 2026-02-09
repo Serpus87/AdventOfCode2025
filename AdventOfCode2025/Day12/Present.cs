@@ -30,4 +30,50 @@ public class Present
 
         return clonedPresent;
     }
+
+    public List<Present> GetVariants()
+    {
+        var variants = new List<Present> {Clone(AllPresentsId)};
+
+        for (int i = 0; i < 3; i++)
+        {
+            var numberOfTimesToRotate = i + 1;
+            var rotatedVariant = Rotate(numberOfTimesToRotate);
+
+            if (true) // evaluate if new
+            {
+                variants.Add(rotatedVariant);
+            }
+        }
+
+        foreach(var variant in variants)
+        {
+            var flippedVariant = variant.Flip();
+
+            if (true) // evaluate if new
+            {
+                variants.Add(flippedVariant);
+            }
+        }
+
+        return variants;
+    }
+
+    public Present Rotate(int numberOfTimesToRotate)
+    {
+        var clone = Clone(AllPresentsId);
+
+        // do rotation x number of times
+
+        return clone;
+    }
+
+    public Present Flip()
+    {
+        var clone = Clone(AllPresentsId);
+
+        // flip
+
+        return clone;
+    }
 }
