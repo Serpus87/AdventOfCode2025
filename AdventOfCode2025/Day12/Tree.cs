@@ -9,7 +9,13 @@ namespace AdventOfCode2025.Day12;
 
 public class Tree
 {
-    public Region Region { get; set; }
-    public List<int> RequiredPresentIds { get; set; }
+    public Region Region { get; init; }
+    public List<int> RequiredPresentIds { get; init; }
     public List<Present> Presents { get; set; }
+
+    public Tree(Region region, List<int> requiredPresentIds)
+    {
+        Region = region;
+        RequiredPresentIds = requiredPresentIds;
+    }
 }

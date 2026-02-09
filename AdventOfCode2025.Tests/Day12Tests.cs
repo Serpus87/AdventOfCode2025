@@ -14,7 +14,7 @@ public class Day12Tests
     public void InputReader_Example_ReturnsExpectedNumberOfTreesAndPresents()
     {
         // Arrange
-        var expectedNumberOfPresents = 5;
+        var expectedNumberOfPresents = 6;
         var expectedNumberOfTrees = 3;
         var fileName = "Example.txt";
 

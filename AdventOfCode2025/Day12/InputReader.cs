@@ -24,16 +24,14 @@ public static class InputReader
         {
             if (line.Length == 0)
             {
-                var present = CreatePresent(presentId,fieldsList);
+                var present = CreatePresent(presentId, fieldsList);
                 presents.Add(present);
 
                 nrows = 0;
-                ncols = 0;
                 fieldsList = new List<PresentField>();
                 continue;
             }
 
-            ncols = 0;
             if (!line.Contains('x'))
             {
                 if (line.Contains(':'))
@@ -42,15 +40,50 @@ public static class InputReader
                     continue;
                 }
 
-                foreach(var character in line)
+                ncols = 0;
+                foreach (var character in line)
                 {
                     var position = new Position(nrows, ncols);
 
-                    fieldsList.Add(new PresentField(position,character));
+                    fieldsList.Add(new PresentField(position, character));
                     ncols++;
                 }
 
                 nrows++;
+                continue;
+            }
+
+            if (line.Contains('x'))
+            {
+                var splitString = line.Split(":");
+                var regionString = splitString[0];
+                var presentRequirementsString = splitString[1];
+
+                var regionSplitString = regionString.Split("x");
+                nrows = int.Parse(regionSplitString[0]);
+                ncols = int.Parse(regionSplitString[1]);
+                var region = new Region(nrows, ncols);
+
+                var presentIdSplitString = presentRequirementsString.Split(" ").Where(x=>x != "").ToList();
+
+                var index = 0;
+                var requirements = new List<int>();
+                foreach (var presentIdString in presentIdSplitString) // TODO improve
+                {
+                    if (presentIdString != "0")
+                    {
+                        var numberOfTimesToAdd = int.Parse(presentIdString);
+
+                        for (var i = 0; i < numberOfTimesToAdd; i++)
+                        {
+                            requirements.Add(index);
+                        }
+                    }
+                    index++;
+                }
+
+                var tree = new Tree(region, requirements);
+                trees.Add(tree);
             }
         }
 
@@ -68,7 +101,7 @@ public static class InputReader
         {
             for (var column = 0; column < ncols; column++)
             {
-                present.Fields[row, column] = fieldsList.Single(x=>x.Position.Row == row && x.Position.Column == column);
+                present.Fields[row, column] = fieldsList.Single(x => x.Position.Row == row && x.Position.Column == column);
             }
         }
 
