@@ -8,20 +8,21 @@ namespace AdventOfCode2025.Day12;
 
 public static class InputReader
 {
-    //public static List<Device> GetDevices(string fileName) {
+    public static Input GetTreesAndPresents(string fileName)
+    {
+        var presents = new List<Present>();
+        var trees = new List<Tree>();
 
-    //    var devices = new List<Device>();
-    //    string[] lines = File.ReadAllLines($"Day11\\{fileName}");
+        string[] lines = File.ReadAllLines($"Day12\\{fileName}");
 
-    //    foreach (var line in lines)
-    //    {
-    //        var nameAndOutputNames = line.Split(':',' ');
-    //        var name = nameAndOutputNames[0];
-    //        var outputNames = nameAndOutputNames.Skip(2).ToList();
+        foreach (var line in lines)
+        {
+            if (!line.Contains('x'))
+            {
 
-    //        devices.Add(new Device(name, outputNames));
-    //    }
+            }
+        }
 
-    //    return devices;
-    //}
+        return new Input(presents, trees);
+    }
 }

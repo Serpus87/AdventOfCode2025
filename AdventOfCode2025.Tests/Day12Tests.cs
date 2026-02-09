@@ -11,6 +11,22 @@ namespace AdventOfCode2025.Tests;
 public class Day12Tests
 {
     [TestMethod]
+    public void InputReader_Example_ReturnsExpectedNumberOfTreesAndPresents()
+    {
+        // Arrange
+        var expectedNumberOfPresents = 5;
+        var expectedNumberOfTrees = 3;
+        var fileName = "Example.txt";
+
+        // Act
+        var result = InputReader.GetTreesAndPresents(fileName);
+
+        // Assert
+        Assert.AreEqual(expectedNumberOfPresents, result.Presents.Count);
+        Assert.AreEqual(expectedNumberOfTrees, result.Trees.Count);
+    }
+
+    [TestMethod]
     public void Part1Solve_Example_ReturnsExpectedResult()
     {
         // Arrange
