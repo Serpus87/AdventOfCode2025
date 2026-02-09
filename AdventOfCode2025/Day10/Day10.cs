@@ -21,12 +21,12 @@ public static class Day10
 
         // firstTry: 268 -- too low
         // secondTry: 527 -- correct!
-        Console.WriteLine($"Day9 Part1 Solution: {solutionPart1}");
+        Console.WriteLine($"Day10 Part1 Solution: {solutionPart1}");
 
         machines = InputReader.GetMachines(input);
         var solutionPart2 = Part2.Solve(machines); // todo solve
 
         // firstTry:
-        Console.WriteLine($"Day9 Part2 Solution: {solutionPart2}");
+        Console.WriteLine($"Day10 Part2 Solution: {solutionPart2}");
     }
 }
