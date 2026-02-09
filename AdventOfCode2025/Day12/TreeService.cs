@@ -10,6 +10,15 @@ public static class TreeService
 {
     public static bool CanPresentsFit(Tree tree, List<Present> presents)
     {
+        // loop through presents
+
+        // get all rotations and flips (8 per present)
+
+        // try place present
+
+        // if all presents fit, return true;
+
+
         return false;
     }
 }
