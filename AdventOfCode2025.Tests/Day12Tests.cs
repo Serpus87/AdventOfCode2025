@@ -32,9 +32,10 @@ public class Day12Tests
         // Arrange
         var expectedResult = 2ul;
         var fileName = "Example.txt";
+        var input = InputReader.GetTreesAndPresents(fileName);
 
         // Act
-        var result = Part1.Solve();
+        var result = Part1.Solve(input.Trees, input.Presents);
 
         // Assert
         Assert.AreEqual(expectedResult, result);
@@ -46,9 +47,10 @@ public class Day12Tests
         // Arrange
         var expectedResult = 0ul;
         var fileName = "Example.txt";
-   
+        var input = InputReader.GetTreesAndPresents(fileName);
+
         // Act
-        var result = Part2.Solve();
+        var result = Part2.Solve(input.Trees, input.Presents);
 
         // Assert
         Assert.AreEqual(expectedResult, result);

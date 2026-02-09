@@ -11,7 +11,7 @@ public class Tree
 {
     public Region Region { get; init; }
     public List<int> RequiredPresentIds { get; init; }
-    public List<Present> Presents { get; set; }
+    public List<Present> Presents { get; set; } = new List<Present>();
 
     public Tree(Region region, List<int> requiredPresentIds)
     {

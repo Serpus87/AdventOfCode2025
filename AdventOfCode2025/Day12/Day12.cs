@@ -12,14 +12,15 @@ public static class Day12
     {
         // read file
         var fileName = "PuzzleInput.txt";
+        var input = InputReader.GetTreesAndPresents(fileName);
 
-
-        var solutionPart1 = Part1.Solve();
+        var solutionPart1 = Part1.Solve(input.Trees, input.Presents);
 
         // firstTry: 
         Console.WriteLine($"Day11 Part1 Solution: {solutionPart1}");
 
-        var solutionPart2 = Part2.Solve(); 
+        var input = InputReader.GetTreesAndPresents(fileName);
+        var solutionPart2 = Part2.Solve(input.Trees, input.Presents); 
 
         // firstTry:
         Console.WriteLine($"Day11 Part2 Solution: {solutionPart2}");

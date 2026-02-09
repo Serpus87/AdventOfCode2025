@@ -9,7 +9,7 @@ namespace AdventOfCode2025.Day12;
 
 public static class Part2
 {
-    public static ulong Solve()
+    public static ulong Solve(List<Tree> trees, List<Present> presents)
     {
         var result = 0u;
 
